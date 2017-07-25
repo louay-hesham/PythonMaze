@@ -25,6 +25,12 @@
     <Compile Include="Core\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GUI\MainGUI.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GUI\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Main.py">
       <SubType>Code</SubType>
     </Compile>
@@ -35,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />
+    <Folder Include="GUI\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

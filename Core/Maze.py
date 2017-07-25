@@ -4,7 +4,7 @@ class Maze(object):
 
     def __init__(self, **kwargs):
         try:
-            with open("Maze.JSON") as data_file:    
+            with open("Core/Maze.JSON") as data_file:    
                 self.map = json.load(data_file)
                 self.height = len(self.map)
                 self.length = len(self.map[0])
@@ -40,7 +40,7 @@ class Maze(object):
     
     
     def __saveToFile(self):
-        with open('Maze.JSON', 'w') as outfile:
+        with open('Core/Maze.JSON', 'w') as outfile:
             json.dump(self.map, outfile)
 
     def printMaze(self):
