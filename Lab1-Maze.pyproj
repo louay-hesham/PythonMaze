@@ -28,6 +28,9 @@
     <Compile Include="GUI\MainGUI.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GUI\Player.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GUI\__init__.py">
       <SubType>Code</SubType>
     </Compile>
