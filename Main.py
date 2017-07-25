@@ -1,4 +1,4 @@
-from Maze import Maze
+from Core import *
 
 x = Maze()
 x.printMaze()

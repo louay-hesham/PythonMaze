@@ -22,13 +22,19 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Core\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Main.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Maze.py" />
+    <Compile Include="Core\Maze.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Maze.JSON" />
+    <Content Include="Core\Maze.JSON" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
