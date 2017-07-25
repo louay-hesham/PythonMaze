@@ -1,5 +1,5 @@
 from Core import *
+from GUI import MainGUI 
 
-x = Maze()
-x.printMaze()
-print("Done")
+x = MainGUI()
+x.on_execute()
