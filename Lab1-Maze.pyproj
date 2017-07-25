@@ -38,6 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\Maze.JSON" />
+    <Content Include="GUI\block.png" />
+    <Content Include="GUI\player.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />
