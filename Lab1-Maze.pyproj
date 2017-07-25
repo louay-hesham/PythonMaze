@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>6a6da98f-3add-403e-bfdf-097a13716a7e</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>class1.py</StartupFile>
+    <StartupFile>Main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,10 +22,13 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="class1.py">
+    <Compile Include="Main.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Lab1_Maze.py" />
+    <Compile Include="Maze.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Maze.JSON" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
