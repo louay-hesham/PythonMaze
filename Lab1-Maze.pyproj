@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>6a6da98f-3add-403e-bfdf-097a13716a7e</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Lab1_Maze.py</StartupFile>
+    <StartupFile>class1.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,6 +22,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="class1.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Lab1_Maze.py" />
   </ItemGroup>
   <PropertyGroup>
