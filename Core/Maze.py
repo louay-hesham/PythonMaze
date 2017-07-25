@@ -45,3 +45,29 @@ class Maze(object):
 
     def printMaze(self):
         print(self.map)
+
+    def draw(self,display_surf,wall_surf, stairs_surf, start_surf, end_surf, floor_surf):
+        #top floor seperator row
+        for k in range(0, self.width * self.height + self.height + 1):
+            display_surf.blit(floor_surf,( k * 44, 0))
+
+        for k in range(0, self.height):
+            for i in range(0, self.length):
+                display_surf.blit(floor_surf,( k * self.width * 44 + k * 44, i * 44 + 44))
+                for j in range(0,self.width):
+                    if not(isinstance(self.map[k][i][j], int)):
+                        if self.map[k][i][j] == '#':
+                            display_surf.blit(wall_surf,( j * 44 + k * self.width * 44 + (k + 1) * 44, i * 44 + 44))
+                        elif self.map[k][i][j] == 'A':
+                            display_surf.blit(stairs_surf,( j * 44 + k * self.width * 44 + (k + 1) * 44, i * 44 + 44))
+                        elif self.map[k][i][j] == 'S':
+                            display_surf.blit(start_surf,( j * 44 + k * self.width * 44 + (k + 1) * 44, i * 44 + 44))
+                        elif self.map[k][i][j] == 'E':
+                            display_surf.blit(end_surf,( j * 44 + k * self.width * 44 + (k + 1) * 44, i * 44 + 44))
+                    j = j + 1
+                if k == (self.height - 1):
+                    display_surf.blit(floor_surf,( j * 44 + k * self.width * 44 + (k + 1) * 44, i * 44 + 44))
+                i = i + 1;
+
+        for k in range(0, self.width * self.height + self.height + 1):
+            display_surf.blit(floor_surf,( k * 44, (self.length + 1) * 44))

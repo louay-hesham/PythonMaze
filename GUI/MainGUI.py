@@ -5,8 +5,8 @@ from GUI.Player import Player
 import pygame
 
 class MainGUI(object):
-    windowWidth = 800
-    windowHeight = 600
+    windowWidth = 900
+    windowHeight = 400
     player = 0
  
     def __init__(self):
@@ -25,6 +25,10 @@ class MainGUI(object):
         self._running = True
         self._image_surf = pygame.image.load("GUI/player.png").convert()
         self._block_surf = pygame.image.load("GUI/block.png").convert()
+        self._stairs_surf = pygame.image.load("GUI/stairs.png").convert()
+        self._start_surf = pygame.image.load("GUI/start.png").convert()
+        self._end_surf = pygame.image.load("GUI/end.png").convert()
+        self._floor_surf = pygame.image.load("GUI/floor.png").convert()
  
     def on_event(self, event):
         if event.type == QUIT:
@@ -36,7 +40,7 @@ class MainGUI(object):
     def on_render(self):
         self._display_surf.fill((0,0,0))
         self._display_surf.blit(self._image_surf,(self.player.x,self.player.y))
-        self.maze.draw(self._display_surf, self._block_surf)
+        self.maze.draw(self._display_surf, self._block_surf, self._stairs_surf, self._start_surf,  self._end_surf, self._floor_surf)
         pygame.display.flip()
  
     def on_cleanup(self):
