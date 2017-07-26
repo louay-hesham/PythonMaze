@@ -4,17 +4,18 @@ class Maze(object):
 
     def __init__(self, **kwargs):
         try:
-            with open("Core/Maze.JSON") as data_file:    
+            with open("Core/Maze.JSON") as data_file:  
+                #JSON file is found and can be loaded  
                 self.map = json.load(data_file)
                 self.height = len(self.map)
                 self.length = len(self.map[0])
                 self.width = len(self.map[0][0])
         except (FileNotFoundError, TypeError, ValueError) as e:
+            #JSON file can not be found or is unreadable
             self.__initMapFromAir()
             
-
+    # default map when JSON file is not found
     def __initMapFromAir(self):
-        # default map when JSON file is not found
         self.length = 5
         self.width = 5
         self.height = 3
@@ -36,6 +37,7 @@ class Maze(object):
                       [ 4,  1,   1,  '#', 2],
                       [ 1, '#', 'E', '#', 1]]
                    ]
+        #Saving the default map to JSON file for later use
         self.__saveToFile()
     
     
@@ -46,28 +48,35 @@ class Maze(object):
     def printMaze(self):
         print(self.map)
 
+    #Drawing the map into the GUI
     def draw(self,display_surf,wall_surf, stairs_surf, start_surf, end_surf, floor_surf):
-        #top floor seperator row
+        tile_size = 44
+        #top floor seperator
         for k in range(0, self.width * self.height + self.height + 1):
-            display_surf.blit(floor_surf,( k * 44, 0))
+            display_surf.blit(floor_surf,( k * tile_size, 0))
 
-        for k in range(0, self.height):
-            for i in range(0, self.length):
-                display_surf.blit(floor_surf,( k * self.width * 44 + k * 44, i * 44 + 44))
-                for j in range(0,self.width):
-                    if not(isinstance(self.map[k][i][j], int)):
-                        if self.map[k][i][j] == '#':
-                            display_surf.blit(wall_surf,( j * 44 + k * self.width * 44 + (k + 1) * 44, i * 44 + 44))
-                        elif self.map[k][i][j] == 'A':
-                            display_surf.blit(stairs_surf,( j * 44 + k * self.width * 44 + (k + 1) * 44, i * 44 + 44))
-                        elif self.map[k][i][j] == 'S':
-                            display_surf.blit(start_surf,( j * 44 + k * self.width * 44 + (k + 1) * 44, i * 44 + 44))
-                        elif self.map[k][i][j] == 'E':
-                            display_surf.blit(end_surf,( j * 44 + k * self.width * 44 + (k + 1) * 44, i * 44 + 44))
+        for k in range(0, self.height): #repeated for number of floors
+            for i in range(0, self.length): #repeated for floor length
+                #displaying the floor seperator between each floor
+                display_surf.blit(floor_surf,( k * tile_size * (self.width + 1) , (i + 1) * tile_size))
+                for j in range(0,self.width): #repeated for floor width
+                    if not(isinstance(self.map[k][i][j], int)): #if not an empty space which can be traversed
+                        tile = None;
+                        if self.map[k][i][j] == '#': #wall
+                            tile = wall_surf
+                        elif self.map[k][i][j] == 'A': #stairs
+                            tile = stairs_surf
+                        elif self.map[k][i][j] == 'S': #start tile
+                            tile = start_surf
+                        elif self.map[k][i][j] == 'E': #end tile
+                            tile = end_surf
+
+                        display_surf.blit(tile,( (j + k * self.width + k + 1) * tile_size, (i + 1) * tile_size))
                     j = j + 1
-                if k == (self.height - 1):
-                    display_surf.blit(floor_surf,( j * 44 + k * self.width * 44 + (k + 1) * 44, i * 44 + 44))
+                if k == (self.height - 1): #if last floor, print the final floor sperator
+                    display_surf.blit(floor_surf,( (j + k * self.width + k + 1) * tile_size, (i + 1) * tile_size))
                 i = i + 1;
-
+        
+        #bottom floor seperator
         for k in range(0, self.width * self.height + self.height + 1):
-            display_surf.blit(floor_surf,( k * 44, (self.length + 1) * 44))
+            display_surf.blit(floor_surf,( k * tile_size, (self.length + 1) * tile_size))
