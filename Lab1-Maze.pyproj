@@ -22,13 +22,35 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Core\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GUI\MainGUI.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GUI\Player.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GUI\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Main.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Maze.py" />
+    <Compile Include="Core\Maze.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Maze.JSON" />
+    <Content Include="Core\Maze.JSON" />
+    <Content Include="GUI\end.png" />
+    <Content Include="GUI\floor.png" />
+    <Content Include="GUI\stairs.png" />
+    <Content Include="GUI\block.png" />
+    <Content Include="GUI\player.png" />
+    <Content Include="GUI\start.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\" />
+    <Folder Include="GUI\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
