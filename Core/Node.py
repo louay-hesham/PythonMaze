@@ -25,7 +25,7 @@ class Node(object):
         if steps == 0:
             location = Location(i, j, k)
             print(location)
-            return set().add(location)
+            return {location}
 
         children_set = set()
         #right
@@ -70,7 +70,7 @@ class Node(object):
             steps = 1
         elif self.n == 'E':
             steps = 0
-        return self.__get_children_coordinates(self.i, self.j, self.k, steps)
+        return list(self.__get_children_coordinates(self.i, self.j, self.k, steps))
 
 class Location(object):
     def __init__(self, i, j, k):
