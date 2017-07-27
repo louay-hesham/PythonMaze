@@ -53,25 +53,25 @@ class MainGUI(object):
         if self.on_init() == False:
             self._running = False
  
-        while( self._running ):
-            events = pygame.event.get()
-            for event in events:
-                #responding to pressing a key
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_LEFT:
-                        self.player.moveLeft()
-                    if event.key == pygame.K_RIGHT:
-                        self.player.moveRight()
-                    if event.key == pygame.K_UP:
-                        self.player.moveUp()
-                    if event.key == pygame.K_DOWN:
-                        self.player.moveDown()
-                    if event.key == pygame.K_ESCAPE:
-                        self._running = False
+        #while( self._running ):
+        #    events = pygame.event.get()
+        #    for event in events:
+        #        #responding to pressing a key
+        #        if event.type == pygame.KEYDOWN:
+        #            if event.key == pygame.K_LEFT:
+        #                self.player.moveLeft()
+        #            if event.key == pygame.K_RIGHT:
+        #                self.player.moveRight()
+        #            if event.key == pygame.K_UP:
+        #                self.player.moveUp()
+        #            if event.key == pygame.K_DOWN:
+        #                self.player.moveDown()
+        #            if event.key == pygame.K_ESCAPE:
+        #                self._running = False
 
-            self.on_loop()
-            self.on_render()
-        self.on_cleanup()
+        self.on_loop()
+        self.on_render()
+        #self.on_cleanup()
 
 
 
