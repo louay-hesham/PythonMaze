@@ -1,15 +1,24 @@
 
 
 class Node(object):
+
     def __init__(self, i, j, k, maze):
         self.i = i;
         self.j = j;
         self.k = k;
         self.n = maze.map[i][j][k];
         self.maze = maze;
-        self.path = set()
+        self.visited = [None] * maze.height
+        for i in range(0,maze.height):
+            self.visited[i] = [None] * maze.length
+            for j in range(0, maze.length):
+                self.visited[i][j] = [False] * maze.width
 
     def __get_children_coordinates(self, i, j, k, steps):
+        if self.visited[i][j][k]:
+            return
+
+        self.visited[i][j][k] = True
         if self.maze.map[i][j][k] == '#':
             return
 
