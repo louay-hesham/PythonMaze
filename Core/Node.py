@@ -70,7 +70,12 @@ class Node(object):
             steps = 1
         elif self.n == 'E':
             steps = 0
-        return list(self.__get_children_coordinates(self.i, self.j, self.k, steps))
+        
+        children_locations = self.__get_children_coordinates(self.i, self.j, self.k, steps)
+        children_nodes = list()
+        for location in children_locations:
+            children_nodes.append(location.get_node(self.maze))
+        return children_nodes
 
 class Location(object):
     def __init__(self, i, j, k):
@@ -93,6 +98,9 @@ class Location(object):
         for attr in dir(Location):
             if not attr.startswith("__"):
                 yield attr
+
+    def get_node(self, maze):
+        return Node(self.i, self.j, self.k, maze)
 
 
 
