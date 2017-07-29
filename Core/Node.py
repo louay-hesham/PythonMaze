@@ -1,4 +1,4 @@
-
+from Core.Search import Search
 
 class Node(object):
 
@@ -8,7 +8,6 @@ class Node(object):
         self.k = k;
         self.n = maze.map[i][j][k];
         self.maze = maze;
-        self.found = None
         self.visited = [None] * maze.height
         for i in range(0,maze.height):
             self.visited[i] = [None] * maze.length
@@ -23,7 +22,7 @@ class Node(object):
             return
 
         if self.maze.map[i][j][k] =='E':
-            self.found = Location(i,j,k)
+            Search.found = Node(i,j,k, self.maze)
             return
 
         self.visited[i][j][k] = True
