@@ -2,6 +2,8 @@ from Core.Search import Search
 
 class Node(object):
 
+    queue = []
+
     def __init__(self, i, j, k, maze, parent):
         self.i = i;
         self.j = j;
@@ -99,7 +101,8 @@ class Node(object):
         if self.parent != None:
             parent_cost = self.parent.get_path()
 
-        print(self)
+        Node.queue.append(self)
+        #print(self)
         if isinstance (self.n, int):
             cost = self.n
         elif self.n == 'E':

@@ -1,3 +1,4 @@
+from Core.Node import Node
 
 class Search(object):
 
@@ -14,6 +15,7 @@ class Search(object):
                 self.visited[i][j] = [False] * maze.width
 
     def BFS(self):
+        Node.queue = []
         self.ds.append(self.start_node)
         self.visited[self.start_node.i][self.start_node.j][self.start_node.k] = True
         while self.ds and Search.found == None:
