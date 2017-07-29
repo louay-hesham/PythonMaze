@@ -1,7 +1,7 @@
 from pygame.locals import *
 from Core import *
 from GUI.Controller import Controller
-
+import sys
 import pygame
 
 class MainGUI(object):
@@ -50,7 +50,11 @@ class MainGUI(object):
             self._running = False
         self.on_render()
         search_tool = Search(self.maze.start_node, self.maze)
-        search_tool.UCSheap()
+        x=search_tool.UCSheap()
+        
+        if not search_tool.found:
+            print("failed to find solution")
+            sys.exit(1)
         path = search_tool.get_path()
         self.controller = Controller(self.maze, path)
         while( self._running ):

@@ -34,6 +34,9 @@ class Search(object):
         while self.ds and Search.found == None:
             s = self.ds.pop(0)
             children = s.get_children_nodes()
+            if not children:
+                
+                return 0
             for child in children:
                 if self.visited[child.i][child.j][child.k] == False:
                     self.ds.append(child)
@@ -50,40 +53,26 @@ class Search(object):
             if s[1].n == 'E':
                 print("found")
                 break
-            print("looking")
-            print(s[0])
+          
             children = s[1].get_children_nodes()
+            if not children:
+                
+                return 0
             for child in children:
-                print(child)
+               
                 if self.visited[child.i][child.j][child.k] == False:
                     self.visited[child.i][child.j][child.k] = True
                     if s[1].n == "A" or s[1].n == 'S' or s[1].n == 'E':
                         heapq.heappush(self.ds,(s[0] + 1, child))
-                        #self.ds.append((s[0] + 1, child))
+                        
                     else:
                         heapq.heappush(self.ds,(s[0] + s[1].n, child)) 
-                        #self.ds.append((s[0] + s[1].n, child))
-                    print(self.ds)
+                        
 
         print("UCS cost is " + str(Search.found.get_path()))
 
 
-    def UCS(self):
-        list = PriorityQueue()
-        list.put((100000,self.start_node))
-        list.put((0, self.start_node))
-
-        while not list.empty():
-            s = list.get()
-            if s[1].n == 'E':
-                print("found")
-                break
-            print("looking")
-            children = s[1].get_children_nodes()
-            for child in children:
-                print(child)
-                list.put((child.n, child))
-                print(list)
+   
 
 
     def DFS(self):
@@ -94,6 +83,8 @@ class Search(object):
             if self.visited[s.i][s.j][s.k] == False:
                     self.visited[s.i][s.j][s.k] = True
                     children = s.get_children_nodes()
+                    if not children:
+                       return 0
                     for child in children:
                          if self.visited[child.i][child.j][child.k] == False:
                             self.ds.append(child)
