@@ -31,10 +31,10 @@
     <Compile Include="Core\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GUI\MainGUI.py">
+    <Compile Include="GUI\Controller.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GUI\Player.py">
+    <Compile Include="GUI\MainGUI.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GUI\__init__.py">
@@ -51,7 +51,6 @@
     <Content Include="GUI\floor.png" />
     <Content Include="GUI\stairs.png" />
     <Content Include="GUI\block.png" />
-    <Content Include="GUI\player.png" />
     <Content Include="GUI\start.png" />
   </ItemGroup>
   <ItemGroup>

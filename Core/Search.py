@@ -1,9 +1,11 @@
+from Core.Node import Node
 
 class Search(object):
 
     found = None
 
     def __init__(self, start_node, maze):
+        self.path_queue = []
         self.maze = maze
         self.start_node = start_node
         self.ds = []
@@ -13,7 +15,13 @@ class Search(object):
             for j in range(0, maze.length):
                 self.visited[i][j] = [False] * maze.width
 
+    def __get_path(self, node):
+        if node.parent != None:
+            self.__get_path(node.parent)
+        self.path_queue.append(node)
+
     def BFS(self):
+        Node.queue = []
         self.ds.append(self.start_node)
         self.visited[self.start_node.i][self.start_node.j][self.start_node.k] = True
         while self.ds and Search.found == None:
@@ -24,5 +32,10 @@ class Search(object):
                     self.ds.append(child)
                     self.visited[child.i][child.j][child.k] = True
         print("Cost is " + str(Search.found.get_path()))
+        
+
+    def get_path(self):
+        self.__get_path(Search.found)
+        return self.path_queue
 
 

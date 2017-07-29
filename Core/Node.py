@@ -1,6 +1,7 @@
-from Core.Search import Search
 
 class Node(object):
+
+    queue = []
 
     def __init__(self, i, j, k, maze, parent):
         self.i = i;
@@ -82,7 +83,6 @@ class Node(object):
         self.visited[i][j][k] = False
         return children_set
 
-
     def get_children_nodes(self):
         steps = 0
         if isinstance(self.n, int):
@@ -99,7 +99,8 @@ class Node(object):
         if self.parent != None:
             parent_cost = self.parent.get_path()
 
-        print(self)
+        Node.queue.append(self)
+        #print(self)
         if isinstance (self.n, int):
             cost = self.n
         elif self.n == 'E':
@@ -107,6 +108,8 @@ class Node(object):
         else:
             cost = 1
         return cost + parent_cost
+
+from Core.Search import Search
 
 
 
