@@ -8,14 +8,22 @@ class Node(object):
         self.k = k;
         self.n = maze.map[i][j][k];
         self.maze = maze;
+        self.found = None
         self.visited = [None] * maze.height
         for i in range(0,maze.height):
             self.visited[i] = [None] * maze.length
             for j in range(0, maze.length):
                 self.visited[i][j] = [False] * maze.width
 
+    def __str__(self):
+        return str(self.n) + ' at (' + str(self.i) + ', ' + str(self.j) + ', ' + str(self.k) + ')' 
+
     def __get_children_coordinates(self, i, j, k, steps):
         if self.visited[i][j][k]:
+            return
+
+        if self.maze.map[i][j][k] =='E':
+            self.found = Location(i,j,k)
             return
 
         self.visited[i][j][k] = True
@@ -23,9 +31,8 @@ class Node(object):
             return
 
         if steps == 0:
-            location = Location(i, j, k)
-            print(location)
-            return {location}
+            self.visited[i][j][k] = False
+            return {Location(i, j, k)}
 
         children_set = set()
         #right
@@ -49,16 +56,17 @@ class Node(object):
             if x is not None:
                 children_set.update(x)
         #up
-        if (i + 1) != self.maze.height and self.maze.map[i][j][k] == 'A':
+        if (i + 1) != self.maze.height and self.maze.map[i][j][k] == 'A' and self.maze.map[i + 1][j][k] == 'A':
             x = self.__get_children_coordinates(i + 1, j, k, steps - 1)
             if x is not None:
                 children_set.update(x)
         #down
-        if (i - 1) != -1 and self.maze.map[i][j][k] == 'A':
+        if (i - 1) != -1 and self.maze.map[i][j][k] == 'A' and self.maze.map[i - 1][j][k] == 'A':
             x = self.__get_children_coordinates(i - 1, j, k, steps - 1)
             if x is not None:
                 children_set.update(x)
 
+        self.visited[i][j][k] = False
         return children_set
 
 
@@ -70,7 +78,12 @@ class Node(object):
             steps = 1
         elif self.n == 'E':
             steps = 0
-        return list(self.__get_children_coordinates(self.i, self.j, self.k, steps))
+        
+        children_locations = self.__get_children_coordinates(self.i, self.j, self.k, steps)
+        children_nodes = list()
+        for location in children_locations:
+            children_nodes.append(location.get_node(self.maze))
+        return children_nodes
 
 class Location(object):
     def __init__(self, i, j, k):
@@ -93,6 +106,9 @@ class Location(object):
         for attr in dir(Location):
             if not attr.startswith("__"):
                 yield attr
+
+    def get_node(self, maze):
+        return Node(self.i, self.j, self.k, maze)
 
 
 
