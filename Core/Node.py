@@ -1,7 +1,7 @@
 
 class Node(object):
 
-    queue = []
+    path = []
 
     def __init__(self, i, j, k, maze, parent):
         self.i = i;
@@ -11,6 +11,7 @@ class Node(object):
         self.n = maze.map[i][j][k];
         self.maze = maze;
         self.visited = [None] * maze.height
+        self.cost = 0
         for i in range(0,maze.height):
             self.visited[i] = [None] * maze.length
             for j in range(0, maze.length):
@@ -104,12 +105,14 @@ class Node(object):
 
         return list(self.__get_children_coordinates(self.i, self.j, self.k, steps))
 
-    def get_path(self):
+    def get_path_cost(self):
+        if self.cost != 0:
+            return self.cost
         parent_cost = 0
         if self.parent != None:
-            parent_cost = self.parent.get_path()
+            parent_cost = self.parent.get_path_cost()
 
-        Node.queue.append(self)
+        Node.path.append(self)
         #print(self)
         if isinstance (self.n, int):
             cost = self.n
@@ -117,7 +120,13 @@ class Node(object):
             cost = 0
         else:
             cost = 1
-        return cost + parent_cost
+        self.cost = cost + parent_cost
+        return self.cost
+
+    def get_path(self):
+        if len(Node.path) == 0:
+            self.get_path_cost()
+        return Node.path
 
 from Core.Search import Search
 
