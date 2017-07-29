@@ -52,26 +52,25 @@ class MainGUI(object):
         search_tool = Search(self.maze.start_node, self.maze)
         x=search_tool.UCSheap()
         
-        if not search_tool.found:
-            print("failed to find solution")
-            sys.exit(1)
-        path = search_tool.get_path()
-        self.controller = Controller(self.maze, path)
-        while( self._running ):
-            events = pygame.event.get()
-            for event in events:
-                #responding to pressing a key
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_LEFT:
-                        self.controller.prev_step()
-                    if event.key == pygame.K_RIGHT:
-                        self.controller.next_step()
-                    if event.key == pygame.K_ESCAPE:
-                        self._running = False
+        if Search.found != None:
+            path = search_tool.get_path()
+            self.controller = Controller(self.maze, path)
+            while( self._running ):
+                events = pygame.event.get()
+                for event in events:
+                    #responding to pressing a key
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_LEFT:
+                            self.controller.prev_step()
+                        if event.key == pygame.K_RIGHT:
+                            self.controller.next_step()
+                        if event.key == pygame.K_ESCAPE:
+                            self._running = False
 
-            self.on_loop()
-            self.on_render()
-        self.on_cleanup()
+                self.on_loop()
+                self.on_render()
+        else:
+            print("no path found")
 
 
 
