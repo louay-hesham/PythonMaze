@@ -56,15 +56,16 @@ class Search(object):
             for child in children:
                 print(child)
                 if self.visited[child.i][child.j][child.k] == False:
-                    if child.n == "A":
-                        self.ds.append((1,child))
-                    else:
-                       # heapq.heappush(self.ds,[child.n,child])
-                        self.ds.append((child.n, child))
                     self.visited[child.i][child.j][child.k] = True
+                    if s[1].n == "A" or s[1].n == 'S' or s[1].n == 'E':
+                        heapq.heappush(self.ds,(s[0] + 1, child))
+                        #self.ds.append((s[0] + 1, child))
+                    else:
+                        heapq.heappush(self.ds,(s[0] + s[1].n, child)) 
+                        #self.ds.append((s[0] + s[1].n, child))
                     print(self.ds)
 
-        print("Cost is ucs " + str(Search.found.get_path()))
+        print("UCS cost is " + str(Search.found.get_path()))
 
 
     def UCS(self):

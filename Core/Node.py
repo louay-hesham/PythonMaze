@@ -32,6 +32,16 @@ class Node(object):
             if not attr.startswith("__"):
                 yield attr
 
+    def __lt__(self, other):
+        n_self = self.n
+        if not isinstance(self.n, int):
+            n_self = 1
+        n_other = other.n
+        if not isinstance(other.n, int):
+            n_other = 1
+        return n_self < n_other
+ 
+
     def __get_children_coordinates(self, i, j, k, steps):
         if self.visited[i][j][k]:
             return
