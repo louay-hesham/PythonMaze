@@ -5,7 +5,7 @@ x = MainGUI()
 x.on_execute()
 maze = x.maze
 n = Node(0,3,3,maze)
+children = n.get_children_nodes()
 
-print ("printing")
-print (n.get_children_nodes())
-print ("done")
+for child in children:
+    print (child)
