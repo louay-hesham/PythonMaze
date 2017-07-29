@@ -42,22 +42,25 @@ class Search(object):
 
 
     def UCSheap(self):
-        self.ds.append([0,self.start_node])
+        self.ds.append((0,self.start_node))
         self.visited[self.start_node.i][self.start_node.j][self.start_node.k] = True
         while self.ds and Search.found == None:
-            s= heapq.heappop(self.ds[0])
+            
+            s= heapq.heappop(self.ds)
             if s[1].n == 'E':
                 print("found")
                 break
             print("looking")
+            print(s[0])
             children = s[1].get_children_nodes()
             for child in children:
-                #print(child)
+                print(child)
                 if self.visited[child.i][child.j][child.k] == False:
                     if child.n == "A":
-                        self.ds.append([1,child])
+                        self.ds.append((1,child))
                     else:
-                        self.ds.append([child.n, child])
+                       # heapq.heappush(self.ds,[child.n,child])
+                        self.ds.append((child.n, child))
                     self.visited[child.i][child.j][child.k] = True
                     print(self.ds)
 

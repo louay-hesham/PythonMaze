@@ -50,7 +50,7 @@ class MainGUI(object):
             self._running = False
         self.on_render()
         search_tool = Search(self.maze.start_node, self.maze)
-        search_tool.DFS()
+        search_tool.UCSheap()
         path = search_tool.get_path()
         self.controller = Controller(self.maze, path)
         while( self._running ):
