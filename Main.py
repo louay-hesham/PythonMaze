@@ -6,5 +6,6 @@ x.on_execute()
 maze = x.maze
 s = maze.start_node
 search = Search(s, maze)
-search.DFS()
-search.BFS()
+
+search.UCSheap()
+#search.BFS()
