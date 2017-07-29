@@ -1,10 +1,14 @@
 from Core.Node import Node
+from pygame.locals import *
 
+import pygame
 import json
 
 class Maze(object):
 
     def __init__(self, **kwargs):
+        self.step_start = ()
+        self.step_end = ()
         try:
             with open("Core/Maze.JSON") as data_file:  
                 #JSON file is found and can be loaded  
@@ -15,6 +19,7 @@ class Maze(object):
         except (FileNotFoundError, TypeError, ValueError) as e:
             #JSON file can not be found or is unreadable
             self.__initMapFromAir()
+        
             
     # default map when JSON file is not found
     def __initMapFromAir(self):
@@ -53,6 +58,8 @@ class Maze(object):
     #Drawing the map into the GUI
     def draw(self,display_surf,wall_surf, stairs_surf, start_surf, end_surf, floor_surf):
         tile_size = 44
+        font = pygame.font.SysFont("monospace", 25, True)
+
         #top floor seperator
         for k in range(0, self.width * self.height + self.height + 1):
             display_surf.blit(floor_surf,( k * tile_size, 0))
@@ -73,8 +80,16 @@ class Maze(object):
                             self.start_node = Node(k,i,j,self,None)
                         elif self.map[k][i][j] == 'E': #end tile
                             tile = end_surf
-
                         display_surf.blit(tile,( (j + k * self.width + k + 1) * tile_size, (i + 1) * tile_size))
+                    else:
+                        font_colour = (255, 255, 255)
+                        if (k, i, j) == self.step_start:
+                            font_colour = (255, 0, 0)
+                        elif (k, i, j) == self.step_end:
+                            font_colour = (0, 255, 0)
+
+                        label = font.render(str(self.map[k][i][j]), 1, font_colour)
+                        display_surf.blit(label, ( (j + k * self.width + k + 1) * tile_size + 12, (i + 1) * tile_size + 12))
                     j = j + 1
                 if k == (self.height - 1): #if last floor, print the final floor sperator
                     display_surf.blit(floor_surf,( (j + k * self.width + k + 1) * tile_size, (i + 1) * tile_size))
