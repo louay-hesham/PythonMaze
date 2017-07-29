@@ -31,7 +31,7 @@ class Search(object):
                 if self.visited[child.i][child.j][child.k] == False:
                     self.ds.append(child)
                     self.visited[child.i][child.j][child.k] = True
-        print("Cost is " + str(Search.found.get_path()))
+        print("BFS cost is " + str(Search.found.get_path()))
         
 
     def get_path(self):
@@ -39,3 +39,15 @@ class Search(object):
         return self.path_queue
 
 
+    def DFS(self):
+        Node.queue = []
+        self.ds.append(self.start_node)
+        while self.ds and Search.found == None:
+            s = self.ds.pop()
+            if self.visited[s.i][s.j][s.k] == False:
+                    self.visited[s.i][s.j][s.k] = True
+                    children = s.get_children_nodes()
+                    for child in children:
+                         if self.visited[child.i][child.j][child.k] == False:
+                            self.ds.append(child)
+        print("DFS cost is " + str(Search.found.get_path()))
