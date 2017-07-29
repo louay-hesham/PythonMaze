@@ -1,4 +1,7 @@
+<<<<<<< 355fcca10a9b9bf2864e86e60aff1f0cbe0d99a7
 from Core.Node import Node
+=======
+>>>>>>> Revert "DFS and UCS"
 
 class Search(object):
 
@@ -38,8 +41,10 @@ class Search(object):
         self.__get_path(Search.found)
         return self.path_queue
 
+
     def DFS(self):
         self.ds.append(self.start_node)
+       # self.visited[self.start_node.i][self.start_node.j][self.start_node.k] = True
         while self.ds and Search.found == None:
             s = self.ds.pop()
             if self.visited[s.i][s.j][s.k] == False:
@@ -52,5 +57,3 @@ class Search(object):
         #print("hena")
         #print(self.visited)
         print("Cost is dfs " + str(Search.found.get_path()))
-
-                   
