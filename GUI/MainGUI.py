@@ -8,16 +8,13 @@ class MainGUI(object):
     #window properties
     windowWidth = 900
     windowHeight = 400
-    controller = 0
  
     def __init__(self):
         self._running = True
         self._display_surf = None
         self._image_surf = None
         self._block_surf = None
-        self.controller = Controller()
         self.maze = Maze()
-        self.step = 0
  
     def on_init(self):
         pygame.init()
@@ -54,6 +51,8 @@ class MainGUI(object):
         self.on_render()
         search_tool = Search(self.maze.start_node, self.maze)
         search_tool.BFS()
+        path = search_tool.get_path()
+        self.controller = Controller(self.maze, path)
         while( self._running ):
             events = pygame.event.get()
             for event in events:

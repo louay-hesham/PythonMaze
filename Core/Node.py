@@ -1,4 +1,3 @@
-from Core.Search import Search
 
 class Node(object):
 
@@ -84,7 +83,6 @@ class Node(object):
         self.visited[i][j][k] = False
         return children_set
 
-
     def get_children_nodes(self):
         steps = 0
         if isinstance(self.n, int):
@@ -110,6 +108,8 @@ class Node(object):
         else:
             cost = 1
         return cost + parent_cost
+
+from Core.Search import Search
 
 
 
