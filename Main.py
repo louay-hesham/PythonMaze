@@ -4,8 +4,6 @@ from GUI import *
 x = MainGUI()
 x.on_execute()
 maze = x.maze
-n = Node(0,3,3,maze)
-children = n.get_children_nodes()
-
-for child in children:
-    print (child)
+s = maze.start_node
+search = Search(s, maze)
+search.BFS()

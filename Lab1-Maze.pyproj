@@ -22,9 +22,6 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Core\DepthFirstSearch.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Core\Node.py">
       <SubType>Code</SubType>
     </Compile>
