@@ -38,4 +38,19 @@ class Search(object):
         self.__get_path(Search.found)
         return self.path_queue
 
+    def DFS(self):
+        self.ds.append(self.start_node)
+        while self.ds and Search.found == None:
+            s = self.ds.pop()
+            if self.visited[s.i][s.j][s.k] == False:
+                    self.visited[s.i][s.j][s.k] = True
+                    children = s.get_children_nodes()
+                    for child in children:
+                         if self.visited[child.i][child.j][child.k] == False:
+                            self.ds.append(child)
 
+        #print("hena")
+        #print(self.visited)
+        print("Cost is dfs " + str(Search.found.get_path()))
+
+                   
