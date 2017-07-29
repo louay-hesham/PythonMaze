@@ -1,11 +1,11 @@
-from Core.Node import Node
+import heapq
+from queue import PriorityQueue
 
 class Search(object):
 
     found = None
 
     def __init__(self, start_node, maze):
-        self.path_queue = []
         self.maze = maze
         self.start_node = start_node
         self.ds = []
@@ -15,13 +15,7 @@ class Search(object):
             for j in range(0, maze.length):
                 self.visited[i][j] = [False] * maze.width
 
-    def __get_path(self, node):
-        if node.parent != None:
-            self.__get_path(node.parent)
-        self.path_queue.append(node)
-
     def BFS(self):
-        Node.queue = []
         self.ds.append(self.start_node)
         self.visited[self.start_node.i][self.start_node.j][self.start_node.k] = True
         while self.ds and Search.found == None:
@@ -32,12 +26,45 @@ class Search(object):
                     self.ds.append(child)
                     self.visited[child.i][child.j][child.k] = True
         print("BFS cost is " + str(Search.found.get_path()))
-        
 
-    def get_path(self):
-        self.__get_path(Search.found)
-        return self.path_queue
+    def UCSheap(self):
+        self.ds.append([0,self.start_node])
+        self.visited[self.start_node.i][self.start_node.j][self.start_node.k] = True
+        while self.ds and Search.found == None:
+            s= heapq.heappop(self.ds[0])
+            if s[1].n == 'E':
+                print("found")
+                break
+            print("looking")
+            children = s[1].get_children_nodes()
+            for child in children:
+                #print(child)
+                if self.visited[child.i][child.j][child.k] == False:
+                    if child.n == "A":
+                        self.ds.append([1,child])
+                    else:
+                        self.ds.append([child.n, child])
+                    self.visited[child.i][child.j][child.k] = True
+                    print(self.ds)
 
+        print("Cost is ucs " + str(Search.found.get_path()))
+
+    def UCS(self):
+        list = PriorityQueue()
+        list.put((100000,self.start_node))
+        list.put((0, self.start_node))
+
+        while not list.empty():
+            s = list.get()
+            if s[1].n == 'E':
+                print("found")
+                break
+            print("looking")
+            children = s[1].get_children_nodes()
+            for child in children:
+                print(child)
+                list.put((child.n, child))
+                print(list)
 
     def DFS(self):
         Node.queue = []
@@ -51,3 +78,4 @@ class Search(object):
                          if self.visited[child.i][child.j][child.k] == False:
                             self.ds.append(child)
         print("DFS cost is " + str(Search.found.get_path()))
+
