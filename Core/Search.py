@@ -24,21 +24,5 @@ class Search(object):
                     self.ds.append(child)
                     self.visited[child.i][child.j][child.k] = True
         print("Cost is " + str(Search.found.get_path()))
-      #  print(self.visited)
 
-    def DFS(self):
-        self.ds.append(self.start_node)
-       # self.visited[self.start_node.i][self.start_node.j][self.start_node.k] = True
-        while self.ds and Search.found == None:
-            s = self.ds.pop()
-            if self.visited[s.i][s.j][s.k] == False:
-                    self.visited[s.i][s.j][s.k] = True
-                    children = s.get_children_nodes()
-                    for child in children:
-                         if self.visited[child.i][child.j][child.k] == False:
-                            self.ds.append(child)
-
-      #  print("hena")
-     #   print(self.visited)
-        print("Cost is dfs " + str(Search.found.get_path()))
 
