@@ -7,7 +7,7 @@ import pygame
 class MainGUI(object):
     #window properties
     windowWidth = 900
-    windowHeight = 400
+    windowHeight = 700
  
     def __init__(self):
         self._running = True
@@ -77,7 +77,6 @@ class MainGUI(object):
                             print("No solution")
             self.on_loop()
             self.on_render()
-    
 
     def reset_gui(self):
         if self.search_mode == 1:

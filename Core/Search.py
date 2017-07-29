@@ -45,7 +45,8 @@ class Search(object):
                 if self.visited[child.i][child.j][child.k] == False:
                     self.ds.append(child)
                     self.visited[child.i][child.j][child.k] = True
-        print("BFS cost is " + str(Search.found.get_path_cost()))
+        self.maze.solved = True
+        self.maze.print("BFS cost is " + str(Search.found.get_path_cost()))
 
     def UCS(self):
         self.__reset()
@@ -64,8 +65,9 @@ class Search(object):
                     if s[1].n == "A" or s[1].n == 'S' or s[1].n == 'E':
                         heapq.heappush(self.ds,(s[0] + 1, child))
                     else:
-                        heapq.heappush(self.ds,(s[0] + s[1].n, child)) 
-        print("UCS cost is " + str(Search.found.get_path_cost()))
+                        heapq.heappush(self.ds,(s[0] + s[1].n, child))
+        self.maze.solved = True 
+        self.maze.print("UCS cost is " + str(Search.found.get_path_cost()))
 
     def DFS(self):
         self.__reset()
@@ -80,6 +82,7 @@ class Search(object):
                     for child in children:
                          if self.visited[child.i][child.j][child.k] == False:
                             self.ds.append(child)
-        print("DFS cost is " + str(Search.found.get_path_cost()))
+        self.maze.solved = True
+        self.maze.print("DFS cost is " + str(Search.found.get_path_cost()))
 
                    

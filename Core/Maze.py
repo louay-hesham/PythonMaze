@@ -9,6 +9,7 @@ class Maze(object):
     def __init__(self, **kwargs):
         self.step_start = ()
         self.step_end = ()
+        self.solved = False
         try:
             with open("Core/Maze.JSON") as data_file:  
                 #JSON file is found and can be loaded  
@@ -52,13 +53,10 @@ class Maze(object):
         with open('Core/Maze.JSON', 'w') as outfile:
             json.dump(self.map, outfile)
 
-    def printMaze(self):
-        print(self.map)
-
     #Drawing the map into the GUI
     def draw(self,display_surf,wall_surf, stairs_surf, start_surf, end_surf, floor_surf):
         tile_size = 44
-        font = pygame.font.SysFont("monospace", 25, True)
+        self.font = pygame.font.SysFont("monospace", 25, True)
 
         #top floor seperator
         for k in range(0, self.width * self.height + self.height + 1):
@@ -88,8 +86,13 @@ class Maze(object):
                         elif (k, i, j) == self.step_end:
                             font_colour = (0, 255, 0)
 
-                        label = font.render(str(self.map[k][i][j]), 1, font_colour)
-                        display_surf.blit(label, ( (j + k * self.width + k + 1) * tile_size + 12, (i + 1) * tile_size + 12))
+                        tile_label = self.font.render(str(self.map[k][i][j]), 1, font_colour)
+                        display_surf.blit(tile_label, ( (j + k * self.width + k + 1) * tile_size + 12, (i + 1) * tile_size + 12))
+                        if self.solved:
+                            cost_label = self.font.render(self.str, 1, (255, 255, 255))
+                            display_surf.blit(cost_label, ( 10, (self.length + 4) * tile_size))
+                            step_label = self.font.render("Move from " + str(self.step_start) + " to " + str(self.step_end), 1, (255, 255, 255))
+                            display_surf.blit(step_label, ( 10, (self.length + 5) * tile_size))
                     j = j + 1
                 if k == (self.height - 1): #if last floor, print the final floor sperator
                     display_surf.blit(floor_surf,( (j + k * self.width + k + 1) * tile_size, (i + 1) * tile_size))
@@ -98,3 +101,10 @@ class Maze(object):
         #bottom floor seperator
         for k in range(0, self.width * self.height + self.height + 1):
             display_surf.blit(floor_surf,( k * tile_size, (self.length + 1) * tile_size))
+        guide_label = self.font.render("Press 1 for DFS, 2 for BFS, 3 for UCS", 1, (255, 255, 255))
+        display_surf.blit(guide_label, ( 10, (self.length + 2) * tile_size))
+        guide_label = self.font.render("Use left and right arrows to navigate through steps", 1, (255, 255, 255))
+        display_surf.blit(guide_label, ( 10, (self.length + 3) * tile_size))
+
+    def print (self, str):
+        self.str = str
