@@ -27,6 +27,7 @@ class Search(object):
                     self.visited[child.i][child.j][child.k] = True
         print("BFS cost is " + str(Search.found.get_path()))
 
+
     def UCSheap(self):
         self.ds.append([0,self.start_node])
         self.visited[self.start_node.i][self.start_node.j][self.start_node.k] = True
@@ -49,6 +50,7 @@ class Search(object):
 
         print("Cost is ucs " + str(Search.found.get_path()))
 
+
     def UCS(self):
         list = PriorityQueue()
         list.put((100000,self.start_node))
@@ -66,6 +68,7 @@ class Search(object):
                 list.put((child.n, child))
                 print(list)
 
+
     def DFS(self):
         Node.queue = []
         self.ds.append(self.start_node)
@@ -79,3 +82,4 @@ class Search(object):
                             self.ds.append(child)
         print("DFS cost is " + str(Search.found.get_path()))
 
+                   
