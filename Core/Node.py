@@ -2,10 +2,11 @@ from Core.Search import Search
 
 class Node(object):
 
-    def __init__(self, i, j, k, maze):
+    def __init__(self, i, j, k, maze, parent):
         self.i = i;
         self.j = j;
         self.k = k;
+        self.parent = parent
         self.n = maze.map[i][j][k];
         self.maze = maze;
         self.visited = [None] * maze.height
@@ -17,12 +18,25 @@ class Node(object):
     def __str__(self):
         return str(self.n) + ' at (' + str(self.i) + ', ' + str(self.j) + ', ' + str(self.k) + ')' 
 
+    def __hash__(self):
+        return hash( (self.i, self.j, self.k) )
+
+    def __eq__(self, other):
+        if not isinstance(other, type(self)):
+            return False
+        return self.i == other.i and self.j == other.j and self.k == other.k 
+
+    def __iter__(self):
+        for attr in dir(Node):
+            if not attr.startswith("__"):
+                yield attr
+
     def __get_children_coordinates(self, i, j, k, steps):
         if self.visited[i][j][k]:
             return
 
         if self.maze.map[i][j][k] =='E':
-            Search.found = Node(i,j,k, self.maze)
+            Search.found = Node(i,j,k, self.maze, self)
             return
 
         self.visited[i][j][k] = True
@@ -31,7 +45,7 @@ class Node(object):
 
         if steps == 0:
             self.visited[i][j][k] = False
-            return {Location(i, j, k)}
+            return {Node(i, j, k, self.maze, self)}
 
         children_set = set()
         #right
@@ -77,37 +91,23 @@ class Node(object):
             steps = 1
         elif self.n == 'E':
             steps = 0
-        
-        children_locations = self.__get_children_coordinates(self.i, self.j, self.k, steps)
-        children_nodes = list()
-        for location in children_locations:
-            children_nodes.append(location.get_node(self.maze))
-        return children_nodes
 
-class Location(object):
-    def __init__(self, i, j, k):
-        self.i = i
-        self.j = j
-        self.k = k
+        return list(self.__get_children_coordinates(self.i, self.j, self.k, steps))
 
-    def __str__(self):
-        return '(' + str(self.i) + ', ' + str(self.j) + ', ' + str(self.k) + ')' 
+    def get_path(self):
+        parent_cost = 0
+        if self.parent != None:
+            parent_cost = self.parent.get_path()
 
-    def __hash__(self):
-        return hash( (self.i, self.j, self.k) )
+        print(self)
+        if isinstance (self.n, int):
+            cost = self.n
+        elif self.n == 'E':
+            cost = 0
+        else:
+            cost = 1
+        return cost + parent_cost
 
-    def __eq__(self, other):
-        if not isinstance(other, type(self)):
-            return False
-        return self.i == other.i and self.j == other.j and self.k == other.k 
-
-    def __iter__(self):
-        for attr in dir(Location):
-            if not attr.startswith("__"):
-                yield attr
-
-    def get_node(self, maze):
-        return Node(self.i, self.j, self.k, maze)
 
 
 

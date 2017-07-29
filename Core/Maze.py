@@ -70,10 +70,9 @@ class Maze(object):
                             tile = stairs_surf
                         elif self.map[k][i][j] == 'S': #start tile
                             tile = start_surf
-                            self.start_node = Node(k,i,j,self)
+                            self.start_node = Node(k,i,j,self,None)
                         elif self.map[k][i][j] == 'E': #end tile
                             tile = end_surf
-                            self.end_node = Node(k,i,j,self)
 
                         display_surf.blit(tile,( (j + k * self.width + k + 1) * tile_size, (i + 1) * tile_size))
                     j = j + 1
