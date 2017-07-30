@@ -81,7 +81,7 @@ class MainGUI(object):
             self.on_loop()
             self.on_render()
 
-    def reset_gui(self):
+    def reset_gui(self):  #resetting the search and choosing a new one
         if self.search_mode == 1:
            x= self.search_tool.DFS()
         elif self.search_mode == 2:

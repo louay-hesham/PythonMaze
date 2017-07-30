@@ -6,7 +6,7 @@ import json
 
 class Maze(object):
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs): #MAZe constructor
         self.step_start = ()
         self.step_end = ()
         self.solved = False
@@ -89,9 +89,9 @@ class Maze(object):
                         tile_label = self.font.render(str(self.map[k][i][j]), 1, font_colour)
                         display_surf.blit(tile_label, ( (j + k * self.width + k + 1) * tile_size + 12, (i + 1) * tile_size + 12))
                         if self.solved:
-                            cost_label = self.font.render(self.str, 1, (255, 255, 255))
+                            cost_label = self.font.render(self.str, 1, (255, 255, 255)) #displaying final cost
                             display_surf.blit(cost_label, ( 10, (self.length + 4) * tile_size))
-                            step_label = self.font.render("Move from " + str(self.step_start) + " to " + str(self.step_end), 1, (255, 255, 255))
+                            step_label = self.font.render("Move from " + str(self.step_start) + " to " + str(self.step_end), 1, (255, 255, 255)) #displaying the moves step by step
                             display_surf.blit(step_label, ( 10, (self.length + 5) * tile_size))
                     j = j + 1
                 if k == (self.height - 1): #if last floor, print the final floor sperator
