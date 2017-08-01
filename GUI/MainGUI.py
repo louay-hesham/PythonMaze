@@ -57,6 +57,8 @@ class MainGUI(object):
             for event in events:
                 #responding to pressing a key
                 if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        self._running = False
                     if event.key == pygame.K_1:
                         self.search_mode = 1
                         x=self.reset_gui()
@@ -80,6 +82,7 @@ class MainGUI(object):
                             print("No solution")
             self.on_loop()
             self.on_render()
+        self.on_cleanup()
 
     def reset_gui(self):  #resetting the search and choosing a new one
         if self.search_mode == 1:
