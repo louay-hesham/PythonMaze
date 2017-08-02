@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>6a6da98f-3add-403e-bfdf-097a13716a7e</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Lab1_Maze.py</StartupFile>
+    <StartupFile>Main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,14 +22,44 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Lab1_Maze.py" />
+    <Compile Include="Core\Node.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Core\Search.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Core\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GUI\Controller.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GUI\MainGUI.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GUI\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Main.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Core\Maze.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Core\Maze.JSON" />
+    <Content Include="GUI\end.png" />
+    <Content Include="GUI\floor.png" />
+    <Content Include="GUI\stairs.png" />
+    <Content Include="GUI\block.png" />
+    <Content Include="GUI\start.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\" />
+    <Folder Include="GUI\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
   </PropertyGroup>
-  <Import Condition="Exists($(PtvsTargetsFile))" Project="$(PtvsTargetsFile)" />
-  <Import Condition="!Exists($(PtvsTargetsFile))" Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
        Visual Studio and specify your pre- and post-build commands in
        the BeforeBuild and AfterBuild targets below. -->
@@ -38,4 +68,5 @@
   </Target>
   <Target Name="AfterBuild">
   </Target>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>
