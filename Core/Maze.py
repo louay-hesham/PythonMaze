@@ -105,6 +105,3 @@ class Maze(object):
         display_surf.blit(guide_label, ( 10, (self.length + 2) * tile_size))
         guide_label = self.font.render("Use left and right arrows to navigate through steps", 1, (255, 255, 255))
         display_surf.blit(guide_label, ( 10, (self.length + 3) * tile_size))
-
-    def print (self, str):
-        self.str = str

@@ -108,6 +108,7 @@ class Node(object):
     def get_path_cost(self): #method to calculate the total cost of a path
         if self.cost != 0:
             return self.cost
+
         parent_cost = 0
         if self.parent != None:
             parent_cost = self.parent.get_path_cost()

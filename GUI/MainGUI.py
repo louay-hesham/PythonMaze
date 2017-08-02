@@ -30,13 +30,6 @@ class MainGUI(object):
         self._end_surf = pygame.image.load("GUI/end.png").convert()
         self._floor_surf = pygame.image.load("GUI/floor.png").convert()
  
-    def on_event(self, event):
-        if event.type == QUIT:
-            self._running = False
- 
-    def on_loop(self):
-        pass
- 
     def on_render(self):
         #rendering display
         self._display_surf.fill((0,0,0))
@@ -80,7 +73,6 @@ class MainGUI(object):
                                 self._running = False
                         else:
                             print("No solution")
-            self.on_loop()
             self.on_render()
         self.on_cleanup()
 
