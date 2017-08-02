@@ -30,13 +30,6 @@ class MainGUI(object):
         self._end_surf = pygame.image.load("GUI/end.png").convert()
         self._floor_surf = pygame.image.load("GUI/floor.png").convert()
  
-    def on_event(self, event):
-        if event.type == QUIT:
-            self._running = False
- 
-    def on_loop(self):
-        pass
- 
     def on_render(self):
         #rendering display
         self._display_surf.fill((0,0,0))
@@ -52,19 +45,24 @@ class MainGUI(object):
         self.on_render()
         self.search_tool = Search(self.maze.start_node, self.maze)        
         while( self._running ):
+            x=0
             events = pygame.event.get()
             for event in events:
                 #responding to pressing a key
                 if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        self._running = False
                     if event.key == pygame.K_1:
                         self.search_mode = 1
-                        self.reset_gui()
+                        x=self.reset_gui()
                     if event.key == pygame.K_2:
                         self.search_mode = 2
-                        self.reset_gui()
+                        x=self.reset_gui()
                     if event.key == pygame.K_3:
                         self.search_mode = 3
-                        self.reset_gui()
+                        x=self.reset_gui()
+                    if x==-1:
+                        print("No solution")
                     if self.search_mode != 0:
                         if Search.found != None:
                             if event.key == pygame.K_LEFT:
@@ -75,17 +73,18 @@ class MainGUI(object):
                                 self._running = False
                         else:
                             print("No solution")
-            self.on_loop()
             self.on_render()
+        self.on_cleanup()
 
-    def reset_gui(self):
+    def reset_gui(self):  #resetting the search and choosing a new one
         if self.search_mode == 1:
-            self.search_tool.DFS()
+           x= self.search_tool.DFS()
         elif self.search_mode == 2:
-            self.search_tool.BFS()
+           x= self.search_tool.BFS()
         elif self.search_mode == 3:
-            self.search_tool.UCS()
-            
+           x= self.search_tool.UCS()
+        if x==0:
+           return -1
         self.path = self.search_tool.get_path()
         self.controller = Controller(self.maze, self.path)
 

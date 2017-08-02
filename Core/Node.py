@@ -1,9 +1,9 @@
 
 class Node(object):
 
-    path = []
-
-    def __init__(self, i, j, k, maze, parent):
+    path = []  #list to keep track of the path moved
+    
+    def __init__(self, i, j, k, maze, parent):  #Node constructor
         self.i = i;
         self.j = j;
         self.k = k;
@@ -17,13 +17,13 @@ class Node(object):
             for j in range(0, maze.length):
                 self.visited[i][j] = [False] * maze.width
 
-    def __str__(self):
+    def __str__(self):  #method to print node line
         return str(self.n) + ' at (' + str(self.i) + ', ' + str(self.j) + ', ' + str(self.k) + ')' 
 
     def __hash__(self):
         return hash( (self.i, self.j, self.k) )
 
-    def __eq__(self, other):
+    def __eq__(self, other): 
         if not isinstance(other, type(self)):
             return False
         return self.i == other.i and self.j == other.j and self.k == other.k 
@@ -43,7 +43,7 @@ class Node(object):
         return n_self < n_other
  
 
-    def __get_children_coordinates(self, i, j, k, steps):
+    def __get_children_coordinates(self, i, j, k, steps):  #recursive method to return set of unvisited children nodes to a given node
         if self.visited[i][j][k]:
             return
 
@@ -105,15 +105,16 @@ class Node(object):
 
         return list(self.__get_children_coordinates(self.i, self.j, self.k, steps))
 
-    def get_path_cost(self):
+    def get_path_cost(self): #method to calculate the total cost of a path
         if self.cost != 0:
             return self.cost
+
         parent_cost = 0
         if self.parent != None:
             parent_cost = self.parent.get_path_cost()
 
         Node.path.append(self)
-        #print(self)
+       
         if isinstance (self.n, int):
             cost = self.n
         elif self.n == 'E':
@@ -123,7 +124,7 @@ class Node(object):
         self.cost = cost + parent_cost
         return self.cost
 
-    def get_path(self):
+    def get_path(self):  
         if len(Node.path) == 0:
             self.get_path_cost()
         return Node.path

@@ -1,12 +1,11 @@
 import heapq
-from queue import PriorityQueue
 from Core.Node import Node
 
 class Search(object):
 
     found = None
 
-    def __init__(self, start_node, maze):
+    def __init__(self, start_node, maze): #Search constructor
         self.maze = maze
         self.start_node = start_node
         self.ds = []
@@ -16,7 +15,7 @@ class Search(object):
             for j in range(0, maze.length):
                 self.visited[i][j] = [False] * maze.width
 
-    def __reset(self):
+    def __reset(self): #method to reset the search
         Search.found = None
         Node.path = []
         self.ds = []
@@ -27,11 +26,11 @@ class Search(object):
             for j in range(0, self.maze.length):
                 self.visited[i][j] = [False] * self.maze.width
 
-    def get_path(self):
+    def get_path(self):     #method to return the path of the search
         Search.found.get_path_cost()
         return Search.found.get_path()
 
-    def BFS(self):
+    def BFS(self):  #breadth first search: Traverses the search saves the path and prints the total cost
         self.__reset()
         self.ds.append(self.start_node)
         self.visited[self.start_node.i][self.start_node.j][self.start_node.k] = True
@@ -48,7 +47,7 @@ class Search(object):
         self.maze.solved = True
         self.maze.print("BFS cost is " + str(Search.found.get_path_cost()))
 
-    def UCS(self):
+    def UCS(self):  #uniform cost search: Traverses the search and finds the minimum cost path 
         self.__reset()
         self.ds.append((0,self.start_node))
         self.visited[self.start_node.i][self.start_node.j][self.start_node.k] = True
@@ -69,7 +68,7 @@ class Search(object):
         self.maze.solved = True 
         self.maze.print("UCS cost is " + str(Search.found.get_path_cost()))
 
-    def DFS(self):
+    def DFS(self): #depth first search: Traverses the search saves the path and prints the total cost
         self.__reset()
         self.ds.append(self.start_node)
         while self.ds and Search.found == None:
