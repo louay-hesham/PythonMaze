@@ -36,9 +36,9 @@ class Search(object):
         self.visited[self.start_node.i][self.start_node.j][self.start_node.k] = True
         while self.ds and Search.found == None:
             s = self.ds.pop(0)
+            print(s)
             children = s.get_children_nodes()
             if not children:
-                
                 return 0
             for child in children:
                 if self.visited[child.i][child.j][child.k] == False:
@@ -53,6 +53,7 @@ class Search(object):
         self.visited[self.start_node.i][self.start_node.j][self.start_node.k] = True
         while self.ds and Search.found == None:
             s= heapq.heappop(self.ds)
+            print(s[1])
             if s[1].n == 'E':
                 break
             children = s[1].get_children_nodes()
@@ -73,11 +74,13 @@ class Search(object):
         self.ds.append(self.start_node)
         while self.ds and Search.found == None:
             s = self.ds.pop()
+            print(s)
             if self.visited[s.i][s.j][s.k] == False:
                     self.visited[s.i][s.j][s.k] = True
                     children = s.get_children_nodes()
                     if not children:
                        return 0
+
                     for child in children:
                          if self.visited[child.i][child.j][child.k] == False:
                             self.ds.append(child)

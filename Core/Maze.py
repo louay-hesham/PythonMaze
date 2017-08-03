@@ -26,8 +26,42 @@ class Maze(object):
     def __initMapFromAir(self):
         self.length = 5
         self.width = 5
-        self.height = 3
-        self.map = [ [[ 2,  1,  'S', '#', 2],
+        self.height = 1
+        map1 = [[['S', 1, 1, 1, 1],
+                [1, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1],
+                [1, 1, 1, 1, 'E']]]
+
+        map2 = [[['S', '#', 1, 1, 1],
+                [1, '#', 1, 1, 1],
+                [1, '#', 1, 1, 1],
+                [1, '#', 1, 1, 1],
+                [1, 1, 1, 1, 'E']]]
+
+        map3 = [[[2, 2, 3, 1, 'S'],
+                [2, 2, 3, 1, 2],
+                [1, 2, 1, '#', 3],
+                ['#', '#', 1, '#', '#'],
+                [1, 3, 2, 1, 'E']]]
+
+        map4 = [[['#', '#', '#', 1, '#', 2, 7, 5, 7, '#', '#', '#', 3, 8, 3, 1, '#'],
+                ['#', 8, '#', 4, 4, '#', 2, 8, 4, 4, 4, '#', '#', '#', '#', 2, '#'],
+                ['#', 7, 8, 3, 3, '#', '#', 5, '#', 5, '#', '#', 'E', '#', '#', 5, '#'],
+                ['#', 2, '#', 7, 2, 4, 5, 6, 2, '#', 2, 1, 5, '#', '#', 7, '#'],
+                ['#', 5, '#', '#', 2, '#', '#', '#', 7, 7, 6, 1, '#', 8, '#', 8, '#'],
+                ['#', 3, 6, '#', 5, '#', '#', 3, '#', 1, 2, 1, 8, 4, 2, 4, '#'],
+                ['#', '#', '#', 6, 4, 6, 2, 4, '#', '#', '#', '#', 1, 2, 7, 7, '#'],
+                ['#', 4, '#', 5, 5, '#', 7, '#', 3, 1, '#', 7, '#', 2, 7, 1, '#'],
+                ['#', 6, 8, 3, '#', '#', '#', 3, '#', 3, 2, 1, '#', 8, '#', 2, '#'],
+                ['#', 4, 6, 7, '#', 1, 3, 3, 7, '#', 2, 'S', 6, 8, 2, 5, '#'],
+                ['#', 4, '#', 7, 6, 8, 2, '#', 1, '#', 6, '#', 4, '#', '#', '#', '#'],
+                ['#', '#', '#', '#', 5, '#', '#', 6, 4, 2, '#', '#', 6, 8, 7, 1, '#'],
+                ['#', '#', '#', 1, 1, '#', '#', 1, '#', '#', '#', '#', '#', '#', 4, '#', '#'],
+                ['#', 7, 3, 2, '#', 1, 7, 7, 7, 3, 6, '#', '#', '#', 3, 1, '#'],
+                ['#', '#', '#', '#', 2, 2, 2, 7, '#', '#', 2, '#', '#', 3, 6, '#', '#']]]
+
+        map5 = [ [[ 2,  1,  'S', '#', 2],
                       ['#', 3,   1,   2,  1],
                       [ 2,  1,  '#', '#', 3],
                       [ 2, '#',  2,   3,  2],
@@ -45,8 +79,9 @@ class Maze(object):
                       [ 2,  1,   1,  '#', 2],
                       [ 1, '#', 'E', '#', 1]]
                    ]
+        self.map = map3
         #Saving the default map to JSON file for later use
-        self.__saveToFile()
+        #self.__saveToFile()
     
     
     def __saveToFile(self):
@@ -92,6 +127,7 @@ class Maze(object):
                             cost_label = self.font.render(self.str, 1, (255, 255, 255)) #displaying final cost
                             display_surf.blit(cost_label, ( 10, (self.length + 4) * tile_size))
                             step_label = self.font.render("Move from " + str(self.step_start) + " to " + str(self.step_end), 1, (255, 255, 255)) #displaying the moves step by step
+                            #print("Move from " + str(self.step_start) + " to " + str(self.step_end))
                             display_surf.blit(step_label, ( 10, (self.length + 5) * tile_size))
                     j = j + 1
                 if k == (self.height - 1): #if last floor, print the final floor sperator
@@ -105,3 +141,8 @@ class Maze(object):
         display_surf.blit(guide_label, ( 10, (self.length + 2) * tile_size))
         guide_label = self.font.render("Use left and right arrows to navigate through steps", 1, (255, 255, 255))
         display_surf.blit(guide_label, ( 10, (self.length + 3) * tile_size))
+
+    def print (self, str):
+        self.str = str
+        print(str)
+

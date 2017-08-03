@@ -6,7 +6,7 @@ import pygame
 
 class MainGUI(object):
     #window properties
-    windowWidth = 900
+    windowWidth = 800
     windowHeight = 700
  
     def __init__(self):
@@ -19,6 +19,11 @@ class MainGUI(object):
  
     def on_init(self):
         pygame.init()
+        pygame.RESIZABLE = True
+        info = pygame.display.Info()
+        windowWidth = int( info.current_w * 0.5)
+        windowHeight = int( info.current_h * 0.5)
+        
         self._display_surf = pygame.display.set_mode((self.windowWidth,self.windowHeight), pygame.HWSURFACE)
         self.myfont = pygame.font.SysFont("monospace", 15)
         pygame.display.set_caption('3D Maze')
