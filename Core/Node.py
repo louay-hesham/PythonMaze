@@ -8,7 +8,10 @@ class Node(object):
         self.j = j;
         self.k = k;
         self.parent = parent
-        self.n = maze.map[i][j][k];
+        if parent == None:
+            self.n = 1
+        else:
+            self.n = maze.map[i][j][k];
         self.maze = maze;
         self.visited = [None] * maze.height
         self.cost = 0

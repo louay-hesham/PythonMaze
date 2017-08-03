@@ -1,5 +1,7 @@
 from Core.Node import Node
 from pygame.locals import *
+from random import randint
+import math
 
 import pygame
 import json
@@ -10,83 +12,91 @@ class Maze(object):
         self.step_start = ()
         self.step_end = ()
         self.solved = False
+        self.__generate_random_map()
+
+    def __generate_random_map(self):
+        template = self.__get_random_template()
+        #generate random start point
+        i = 0; j = 0; k = 0;
+        while template[i][j][k] != 'n':
+            i = randint(0, self.height - 1)
+            j = randint(0, self.length - 1)
+            k = randint(0, self.width - 1)
+        self.start_node = Node(i, j, k, self, None)
+        template[i][j][k] = 'S'
+        
+        #generate random end point
+        while template[i][j][k] != 'n':
+            i = randint(0, self.height - 1)
+            j = randint(0, self.length - 1)
+            k = randint(0, self.width - 1)
+        self.end_node = Node(i, j, k, self, None)
+        template[i][j][k] = 'E'
+
+        #generate numbers
+        for i in range(0, self.height):
+            for j in range(0, self.length):
+                for k in range(0, self.width):
+                    if template[i][j][k] == 'n':
+                        template[i][j][k] = randint(1, math.ceil(min(self.width, self.length) / 2))
+        self.map = template
+    
+    #initializes random map template to be loaded
+    def __get_random_template(self):
+        temp_n = randint(0,1)
         try:
-            with open("Core/Maze.JSON") as data_file:  
+            with open("Core/Template-" + str(temp_n) + ".JSON") as data_file:  
                 #JSON file is found and can be loaded  
-                self.map = json.load(data_file)
-                self.height = len(self.map)
-                self.length = len(self.map[0])
-                self.width = len(self.map[0][0])
+                template = json.load(data_file)
         except (FileNotFoundError, TypeError, ValueError) as e:
             #JSON file can not be found or is unreadable
-            self.__initMapFromAir()
-        
+            template = self.__init_template_from_air(temp_n)
+
+        self.height = len(template)
+        self.length = len(template[0])
+        self.width = len(template[0][0])
+        return template
             
     # default map when JSON file is not found
-    def __initMapFromAir(self):
-        self.length = 5
-        self.width = 5
-        self.height = 1
-        map1 = [[['S', 1, 1, 1, 1],
-                [1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 'E']]]
+    def __init_template_from_air(self, n):
 
-        map2 = [[['S', '#', 1, 1, 1],
-                [1, '#', 1, 1, 1],
-                [1, '#', 1, 1, 1],
-                [1, '#', 1, 1, 1],
-                [1, 1, 1, 1, 'E']]]
-
-        map3 = [[[2, 2, 3, 1, 'S'],
-                [2, 2, 3, 1, 2],
-                [1, 2, 1, '#', 3],
-                ['#', '#', 1, '#', '#'],
-                [1, 3, 2, 1, 'E']]]
-
-        map4 = [[['#', '#', '#', 1, '#', 2, 7, 5, 7, '#', '#', '#', 3, 8, 3, 1, '#'],
-                ['#', 8, '#', 4, 4, '#', 2, 8, 4, 4, 4, '#', '#', '#', '#', 2, '#'],
-                ['#', 7, 8, 3, 3, '#', '#', 5, '#', 5, '#', '#', 'E', '#', '#', 5, '#'],
-                ['#', 2, '#', 7, 2, 4, 5, 6, 2, '#', 2, 1, 5, '#', '#', 7, '#'],
-                ['#', 5, '#', '#', 2, '#', '#', '#', 7, 7, 6, 1, '#', 8, '#', 8, '#'],
-                ['#', 3, 6, '#', 5, '#', '#', 3, '#', 1, 2, 1, 8, 4, 2, 4, '#'],
-                ['#', '#', '#', 6, 4, 6, 2, 4, '#', '#', '#', '#', 1, 2, 7, 7, '#'],
-                ['#', 4, '#', 5, 5, '#', 7, '#', 3, 1, '#', 7, '#', 2, 7, 1, '#'],
-                ['#', 6, 8, 3, '#', '#', '#', 3, '#', 3, 2, 1, '#', 8, '#', 2, '#'],
-                ['#', 4, 6, 7, '#', 1, 3, 3, 7, '#', 2, 'S', 6, 8, 2, 5, '#'],
-                ['#', 4, '#', 7, 6, 8, 2, '#', 1, '#', 6, '#', 4, '#', '#', '#', '#'],
-                ['#', '#', '#', '#', 5, '#', '#', 6, 4, 2, '#', '#', 6, 8, 7, 1, '#'],
-                ['#', '#', '#', 1, 1, '#', '#', 1, '#', '#', '#', '#', '#', '#', 4, '#', '#'],
-                ['#', 7, 3, 2, '#', 1, 7, 7, 7, 3, 6, '#', '#', '#', 3, 1, '#'],
-                ['#', '#', '#', '#', 2, 2, 2, 7, '#', '#', 2, '#', '#', 3, 6, '#', '#']]]
-
-        map5 = [ [[ 2,  1,  'S', '#', 2],
-                      ['#', 3,   1,   2,  1],
-                      [ 2,  1,  '#', '#', 3],
-                      [ 2, '#',  2,   3,  2],
-                      [ 3, '#', 'A',  1,  1]],
-
-                     [[ 1,  1,  'A',  1,   1],
-                      [ 1, '#',  1,  '#', '#'],
-                      [ 3, '#',  2,   1,   2],
-                      [ 2, '#', '#', '#',  3],
-                      [ 1,  3,  'A',  2,   1]],
+        template1 = [[['#', '#', '#', 'n', '#', 'n', 'n', 'n', 'n', '#', '#', '#', 'n', 'n', 'n', 'n', '#'],
+                  ['#', 'n', '#', 'n', 'n', '#', 'n', 'n', 'n', 'n', 'n', '#', '#', '#', '#', 'n', '#'],
+                  ['#', 'n', 'n', 'n', 'n', '#', '#', 'n', '#', 'n', '#', '#', 'n', '#', '#', 'n', '#'],
+                  ['#', 'n', '#', 'n', 'n', 'n', 'n', 'n', 'n', '#', 'n', 'n', 'n', '#', '#', 'n', '#'],
+                  ['#', 'n', '#', '#', 'n', '#', '#', '#', 'n', 'n', 'n', 'n', '#', 'n', '#', 'n', '#'],
+                  ['#', 'n', 'n', '#', 'n', '#', '#', 'n', '#', 'n', 'n', 'n', 'n', 'n', 'n', 'n', '#'],
+                  ['#', '#', '#', 'n', 'n', 'n', 'n', 'n', '#', '#', '#', '#', 'n', 'n', 'n', 'n', '#'],
+                  ['#', 'n', '#', 'n', 'n', '#', 'n', '#', 'n', 'n', '#', 'n', '#', 'n', 'n', 'n', '#'],
+                  ['#', 'n', 'n', 'n', '#', '#', '#', 'n', '#', 'n', 'n', 'n', '#', 'n', '#', 'n', '#']]]
                 
-                     [['#', 1,  'A',  3,  2],
-                      [ 2,  3,   2,   2,  3],
-                      [ 1, '#', '#', '#', 1],
-                      [ 2,  1,   1,  '#', 2],
-                      [ 1, '#', 'E', '#', 1]]
-                   ]
-        self.map = map3
-        #Saving the default map to JSON file for later use
-        #self.__saveToFile()
-    
-    
-    def __saveToFile(self):
-        with open('Core/Maze.JSON', 'w') as outfile:
-            json.dump(self.map, outfile)
+
+        template2 = [[[ 'n', 'n', 'n', '#', 'n'],
+                  [ '#', 'n', 'n', 'n', 'n'],
+                  [ 'n', 'n', '#', '#', 'n'],
+                  [ 'n', '#', 'n', 'n', 'n'],
+                  [ 'n', '#', 'A', 'n', 'n']],
+
+                 [[ 'n', 'n', 'A', 'n', 'n'],
+                  [ 'n', '#', 'n', '#', '#'],
+                  [ 'n', '#', 'n', 'n', 'n'],
+                  [ 'n', '#', '#', '#', 'n'],
+                  [ 'n', 'n', 'A', 'n', 'n']],
+                
+                 [[ '#', 'n', 'A', 'n', 'n'],
+                  [ 'n', 'n', 'n', 'n', 'n'],
+                  [ 'n', '#', '#', '#', 'n'],
+                  [ 'n', 'n', 'n', '#', 'n'],
+                  [ 'n', '#', 'n', '#', 'n']]]
+        
+        templates = [template1, template2]
+        #Saving the template to JSON file for later use
+        self.__saveToFile(templates[n], n)
+        return templates[n]
+     
+    def __saveToFile(self, template, n):
+        with open('Core/Template-' + str(n) + '.JSON', 'w') as outfile:
+            json.dump(template, outfile)
 
     #Drawing the map into the GUI
     def draw(self,display_surf,wall_surf, stairs_surf, start_surf, end_surf, floor_surf):
