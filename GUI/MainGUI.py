@@ -6,7 +6,7 @@ import pygame
 
 class MainGUI(object):
     #window properties
-    windowWidth = 900
+    windowWidth = 1000
     windowHeight = 700
  
     def __init__(self):

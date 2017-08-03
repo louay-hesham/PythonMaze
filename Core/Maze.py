@@ -43,7 +43,7 @@ class Maze(object):
     
     #initializes random map template to be loaded
     def __get_random_template(self):
-        temp_n = randint(0,1)
+        temp_n = randint(0,2)
         try:
             with open("Core/Template-" + str(temp_n) + ".JSON") as data_file:  
                 #JSON file is found and can be loaded  
@@ -88,8 +88,28 @@ class Maze(object):
                   [ 'n', '#', '#', '#', 'n'],
                   [ 'n', 'n', 'n', '#', 'n'],
                   [ 'n', '#', 'n', '#', 'n']]]
+
+        template3 = [[['n', '#', '#', '#', 'n', 'n', 'n', 'n'],
+                      ['n', 'n', 'n', '#', '#', '#', '#', 'n'],
+                      ['#', 'n', '#', '#', 'n', '#', '#', 'n'],
+                      ['#', 'n', '#', 'n', 'n', 'n', 'n', 'n'],
+                      ['#', 'n', '#', '#', 'n', '#', '#', '#'],
+                      ['#', 'n', 'n', 'n', 'n', 'n', 'n', 'n'],
+                      ['#', '#', '#', '#', 'n', 'n', 'n', 'n'],
+                      ['#', 'n', '#', 'n', 'n', '#', 'n', 'n'],
+                      ['#', 'n', 'n', 'n', '#', '#', '#', 'A']],
+
+                     [['#', '#', '#', 'n', '#', 'n', 'n', 'n'],
+                      ['#', 'n', '#', 'n', 'n', 'n', 'n', 'n'],
+                      ['#', 'n', 'n', 'n', 'n', '#', '#', 'n'],
+                      ['n', '#', 'n', 'n', 'n', '#', '#', 'n'],
+                      ['n', 'n', 'n', 'n', '#', 'n', '#', 'n'],
+                      ['#', 'n', 'n', '#', 'n', 'n', '#', 'n'],
+                      ['#', 'n', '#', 'n', 'n', 'n', 'n', 'n'],
+                      ['n', 'n', '#', 'n', '#', 'n', 'n', 'n'],
+                      ['#', 'n', 'n', 'n', '#', 'n', '#', 'A']]]
         
-        templates = [template1, template2]
+        templates = [template1, template2, template3]
         #Saving the template to JSON file for later use
         self.__saveToFile(templates[n], n)
         return templates[n]
