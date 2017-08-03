@@ -6,7 +6,7 @@ import pygame
 
 class MainGUI(object):
     #window properties
-    windowWidth = 800
+    windowWidth = 900
     windowHeight = 700
  
     def __init__(self):
@@ -66,6 +66,10 @@ class MainGUI(object):
                     if event.key == pygame.K_3:
                         self.search_mode = 3
                         x=self.reset_gui()
+                    if event.key == pygame.K_r:
+                        self.maze = Maze()
+                        self.search_tool = Search(self.maze.start_node, self.maze) 
+                        self.search_mode = 0
                     if x==-1:
                         print("No solution")
                     if self.search_mode != 0:
