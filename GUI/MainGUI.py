@@ -48,7 +48,7 @@ class MainGUI(object):
         if self.on_init() == False:
             self._running = False
         self.on_render()
-        self.search_tool = Search(self.maze.start_node, self.maze)        
+        self.search_tool = Search(self.maze.start_node, self.maze.end_node, self.maze)        
         while( self._running ):
             x=0
             events = pygame.event.get()
@@ -66,9 +66,15 @@ class MainGUI(object):
                     if event.key == pygame.K_3:
                         self.search_mode = 3
                         x=self.reset_gui()
+                    if event.key == pygame.K_4:
+                        self.search_mode = 4
+                        x=self.reset_gui()
+                    if event.key == pygame.K_5:
+                        self.search_mode = 5
+                        x=self.reset_gui()
                     if event.key == pygame.K_r:
                         self.maze = Maze()
-                        self.search_tool = Search(self.maze.start_node, self.maze) 
+                        self.search_tool = Search(self.maze.start_node,self.maze.end_node, self.maze) 
                         self.search_mode = 0
                     if x==-1:
                         print("No solution")
@@ -92,6 +98,10 @@ class MainGUI(object):
            x= self.search_tool.BFS()
         elif self.search_mode == 3:
            x= self.search_tool.UCS()
+        elif self.search_mode == 4:
+           x= self.search_tool.ASM()
+        elif self.search_mode == 5:
+           x= self.search_tool.ASE()
         if x==0:
            return -1
         self.path = self.search_tool.get_path()

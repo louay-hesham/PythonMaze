@@ -143,6 +143,7 @@ class Maze(object):
                             self.start_node = Node(k,i,j,self,None)
                         elif self.map[k][i][j] == 'E': #end tile
                             tile = end_surf
+                            self.end_node = Node(k,i,j,self,None)
                         display_surf.blit(tile,( (j + k * self.width + k + 1) * tile_size, (i + 1) * tile_size))
                     else:
                         font_colour = (255, 255, 255)

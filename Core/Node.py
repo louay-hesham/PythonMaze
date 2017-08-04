@@ -7,6 +7,7 @@ class Node(object):
         self.i = i;
         self.j = j;
         self.k = k;
+        self.g =0;
         self.parent = parent
         if parent == None:
             self.n = 1
