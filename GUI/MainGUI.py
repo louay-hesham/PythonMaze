@@ -1,13 +1,12 @@
 from pygame.locals import *
 from Core import *
-from GUI.Controller import Controller
 import sys
 import pygame
 
 class MainGUI(object):
     #window properties
     windowWidth = 1000
-    windowHeight = 700
+    windowHeight = 850
  
     def __init__(self):
         self._running = True
@@ -15,7 +14,6 @@ class MainGUI(object):
         self._image_surf = None
         self._block_surf = None
         self.maze = Maze()
-        self.search_mode = 0
  
     def on_init(self):
         pygame.init()
@@ -57,55 +55,24 @@ class MainGUI(object):
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         self._running = False
-                    if event.key == pygame.K_1:
-                        self.search_mode = 1
-                        x=self.reset_gui()
-                    if event.key == pygame.K_2:
-                        self.search_mode = 2
-                        x=self.reset_gui()
-                    if event.key == pygame.K_3:
-                        self.search_mode = 3
-                        x=self.reset_gui()
+                    if event.key == pygame.K_1: #DFS
+                        self.search_tool.set_mode(1)
+                    if event.key == pygame.K_2: #BFS
+                        self.search_tool.set_mode(2)
+                    if event.key == pygame.K_3: #UCS
+                        self.search_tool.set_mode(3)
                     if event.key == pygame.K_4:
-                        self.search_mode = 4
-                        x=self.reset_gui()
+                        self.search_tool.set_mode(4)
                     if event.key == pygame.K_5:
-                        self.search_mode = 5
-                        x=self.reset_gui()
-                    if event.key == pygame.K_r:
+                        self.search_tool.set_mode(5)
+                    if event.key == pygame.K_r: #new random map
                         self.maze = Maze()
                         self.search_tool = Search(self.maze.start_node,self.maze.end_node, self.maze) 
-                        self.search_mode = 0
-                    if x==-1:
-                        print("No solution")
-                    if self.search_mode != 0:
-                        if Search.found != None:
-                            if event.key == pygame.K_LEFT:
-                                self.controller.prev_step()
-                            if event.key == pygame.K_RIGHT:
-                                self.controller.next_step()
-                            if event.key == pygame.K_ESCAPE:
-                                self._running = False
-                        else:
-                            print("No solution")
+                    if event.key == pygame.K_RIGHT and self.search_tool.mode != 0: #next step
+                        self.search_tool.next_step()
             self.on_render()
         self.on_cleanup()
 
-    def reset_gui(self):  #resetting the search and choosing a new one
-        if self.search_mode == 1:
-           x= self.search_tool.DFS()
-        elif self.search_mode == 2:
-           x= self.search_tool.BFS()
-        elif self.search_mode == 3:
-           x= self.search_tool.UCS()
-        elif self.search_mode == 4:
-           x= self.search_tool.ASM()
-        elif self.search_mode == 5:
-           x= self.search_tool.ASE()
-        if x==0:
-           return -1
-        self.path = self.search_tool.get_path()
-        self.controller = Controller(self.maze, self.path)
 
 
 

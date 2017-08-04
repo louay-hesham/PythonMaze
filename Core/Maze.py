@@ -9,9 +9,10 @@ import json
 class Maze(object):
 
     def __init__(self, **kwargs): #MAZe constructor
-        self.step_start = ()
+        self.step_node = ()
         self.step_end = ()
         self.solved = False
+        self.str = ""
         self.__generate_random_map()
 
     def __generate_random_map(self):
@@ -34,9 +35,13 @@ class Maze(object):
         template[i][j][k] = 'E'
 
         #generate numbers
+        self.tile_color = [None] * self.height
         for i in range(0, self.height):
+            self.tile_color[i] = [None] * self.length
             for j in range(0, self.length):
+                self.tile_color[i][j] = [None] * self.width
                 for k in range(0, self.width):
+                    self.tile_color[i][j][k] = 0
                     if template[i][j][k] == 'n':
                         template[i][j][k] = randint(1, math.ceil(min(self.width, self.length) / 2))
         self.map = template
@@ -118,11 +123,17 @@ class Maze(object):
         with open('Core/Template-' + str(n) + '.JSON', 'w') as outfile:
             json.dump(template, outfile)
 
+    def reset_colors(self):
+        for i in range(0, self.height):
+            for j in range(0, self.length):
+                for k in range(0, self.width):
+                    self.tile_color[i][j][k] = 0
+
     #Drawing the map into the GUI
     def draw(self,display_surf,wall_surf, stairs_surf, start_surf, end_surf, floor_surf):
-        tile_size = 44
-        self.font = pygame.font.SysFont("monospace", 25, True)
-
+        tile_size = 37
+        number_font = pygame.font.SysFont("monospace", 23, True)
+        text_font = pygame.font.SysFont("monospace", 18, True)
         #top floor seperator
         for k in range(0, self.width * self.height + self.height + 1):
             display_surf.blit(floor_surf,( k * tile_size, 0))
@@ -146,20 +157,20 @@ class Maze(object):
                             self.end_node = Node(k,i,j,self,None)
                         display_surf.blit(tile,( (j + k * self.width + k + 1) * tile_size, (i + 1) * tile_size))
                     else:
-                        font_colour = (255, 255, 255)
-                        if (k, i, j) == self.step_start:
-                            font_colour = (255, 0, 0)
-                        elif (k, i, j) == self.step_end:
-                            font_colour = (0, 255, 0)
+                        if self.tile_color[k][i][j] == 0:
+                            font_colour = (255, 255, 255)
+                        elif self.tile_color[k][i][j] == 1:
+                            font_colour = (255, 255, 0)
+                        elif self.tile_color[k][i][j] == 2:
+                            font_colour = (100, 100, 255)
+                        elif self.tile_color[k][i][j] == 3:
+                            font_colour = (255, 0, 255)
 
-                        tile_label = self.font.render(str(self.map[k][i][j]), 1, font_colour)
-                        display_surf.blit(tile_label, ( (j + k * self.width + k + 1) * tile_size + 12, (i + 1) * tile_size + 12))
-                        if self.solved:
-                            cost_label = self.font.render(self.str, 1, (255, 255, 255)) #displaying final cost
-                            display_surf.blit(cost_label, ( 10, (self.length + 4) * tile_size))
-                            step_label = self.font.render("Move from " + str(self.step_start) + " to " + str(self.step_end), 1, (255, 255, 255)) #displaying the moves step by step
-                            #print("Move from " + str(self.step_start) + " to " + str(self.step_end))
-                            display_surf.blit(step_label, ( 10, (self.length + 5) * tile_size))
+                        tile_label = number_font.render(str(self.map[k][i][j]), 1, font_colour)
+                        display_surf.blit(tile_label, ( (j + k * self.width + k + 1) * tile_size + 10, (i + 1) * tile_size + 10))
+                        cost_label = text_font.render(self.str, 1, (255, 255, 255)) #displaying final cost
+                        display_surf.blit(cost_label, ( 10, (self.length + 6) * tile_size))
+                            
                     j = j + 1
                 if k == (self.height - 1): #if last floor, print the final floor sperator
                     display_surf.blit(floor_surf,( (j + k * self.width + k + 1) * tile_size, (i + 1) * tile_size))
@@ -168,12 +179,15 @@ class Maze(object):
         #bottom floor seperator
         for k in range(0, self.width * self.height + self.height + 1):
             display_surf.blit(floor_surf,( k * tile_size, (self.length + 1) * tile_size))
-        guide_label = self.font.render("Press 1 for DFS, 2 for BFS, 3 for UCS, R to generate new map", 1, (255, 255, 255))
+        guide_label = text_font.render("Press 1 for DFS, 2 for BFS, 3 for UCS", 1, (255, 255, 255))
         display_surf.blit(guide_label, ( 10, (self.length + 2) * tile_size))
-        guide_label = self.font.render("Use left and right arrows to navigate through steps", 1, (255, 255, 255))
+        guide_label = text_font.render("4 for A* with h = Manhattan Distance, 5 for A* with h = Euclidean distance", 1, (255, 255, 255))
         display_surf.blit(guide_label, ( 10, (self.length + 3) * tile_size))
+        guide_label = text_font.render("R to generate new map", 1, (255, 255, 255))
+        display_surf.blit(guide_label, ( 10, (self.length + 4) * tile_size))
+        guide_label = text_font.render("Use right arrow to navigate to next step", 1, (255, 255, 255))
+        display_surf.blit(guide_label, ( 10, (self.length + 5) * tile_size))
 
     def print (self, str):
         self.str = str
-        print(str)
 
