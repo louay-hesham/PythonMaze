@@ -179,7 +179,7 @@ class Maze(object):
         #bottom floor seperator
         for k in range(0, self.width * self.height + self.height + 1):
             display_surf.blit(floor_surf,( k * tile_size, (self.length + 1) * tile_size))
-        guide_label = self.font.render("Press 1 for DFS, 2 for BFS, 3 for UCS, R to generate new map", 1, (255, 255, 255))
+        guide_label = self.font.render("Press 1 for DFS, 2 for BFS, 3 for UCS, 4 for A* with h = Manhattan Distance, 5 for A* with h = Euclidean distance, R to generate new map", 1, (255, 255, 255))
         display_surf.blit(guide_label, ( 10, (self.length + 2) * tile_size))
         guide_label = self.font.render("Use left and right arrows to navigate through steps", 1, (255, 255, 255))
         display_surf.blit(guide_label, ( 10, (self.length + 3) * tile_size))
