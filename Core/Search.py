@@ -32,6 +32,8 @@ class Search(object):
             self.__init_DFS()
         elif self.mode == 2:
             self.__init_BFS()
+        elif self.mode == 3:
+            self.__init_UCS()
         self.maze.reset_colors()
 
     def __init_DFS(self):
@@ -89,6 +91,36 @@ class Search(object):
         else:
             self.maze.print("No Solution")
 
+    def __init_UCS(self):
+        self.ds.append((0,self.start_node))
+        self.visited[self.start_node.i][self.start_node.j][self.start_node.k] = True
+        self.maze.print("UCS mode")
+
+    def __next_UCS_step(self):
+        if self.ds and Search.found == None:
+            s= heapq.heappop(self.ds)
+            self.maze.print("(UCS mode) Visiting " + " " + str(s[1]))
+            self.maze.tile_color[s[1].i][s[1].j][s[1].k] = 2
+            if self.prev_node != None:
+                self.maze.tile_color[self.prev_node.i][self.prev_node.j][self.prev_node.k] = 3
+            self.prev_node = s[1]
+            if s[1].n != 'E':
+                children = s[1].get_children_nodes()
+                if not children:
+                    return 0
+                for child in children:
+                    if self.visited[child.i][child.j][child.k] == False:
+                        self.maze.tile_color[child.i][child.j][child.k] = 1
+                        self.visited[child.i][child.j][child.k] = True
+                        if s[1].n == "A" or s[1].n == 'S' or s[1].n == 'E':
+                            heapq.heappush(self.ds,(s[0] + 1, child))
+                        else:
+                            heapq.heappush(self.ds,(s[0] + s[1].n, child))
+        elif Search.found != None:
+            self.maze.solved = True
+            self.maze.print("UCS cost is " + str(Search.found.get_path_cost()))
+        else:
+            self.maze.print("No Solution")
 
     def set_mode(self, mode):
         self.mode = mode
@@ -99,6 +131,8 @@ class Search(object):
             self.__next_DFS_step()
         elif self.mode == 2:
             self.__next_BFS_step()
+        elif self.mode == 3:
+            self.__next_UCS_step()
 
     def get_path(self):     #method to return the path of the search
         Search.found.get_path_cost()
