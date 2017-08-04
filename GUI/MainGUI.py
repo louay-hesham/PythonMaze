@@ -14,7 +14,6 @@ class MainGUI(object):
         self._image_surf = None
         self._block_surf = None
         self.maze = Maze()
-        self.search_mode = 0
  
     def on_init(self):
         pygame.init()
@@ -58,18 +57,14 @@ class MainGUI(object):
                         self._running = False
                     if event.key == pygame.K_1: #DFS
                         self.search_tool.set_mode(1)
-                        self.search_mode = 1
                     if event.key == pygame.K_2: #BFS
                         self.search_tool.set_mode(2)
-                        self.search_mode = 2
                     if event.key == pygame.K_3: #UCS
                         self.search_tool.set_mode(3)
-                        self.search_mode = 3
                     if event.key == pygame.K_r: #new random map
                         self.maze = Maze()
                         self.search_tool = Search(self.maze.start_node, self.maze) 
-                        self.search_mode = 0
-                    if event.key == pygame.K_RIGHT and self.search_mode != 0: #next step
+                    if event.key == pygame.K_RIGHT and self.search_tool.mode != 0: #next step
                         self.search_tool.next_step()
             self.on_render()
         self.on_cleanup()

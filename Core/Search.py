@@ -22,19 +22,50 @@ class Search(object):
         Node.path = []
         self.ds = []
         self.start_node.cost = 0
+        self.prev_node = None
         self.visited = [None] * self.maze.height
         for i in range(0,self.maze.height):
             self.visited[i] = [None] * self.maze.length
             for j in range(0, self.maze.length):
                 self.visited[i][j] = [False] * self.maze.width
-        
-        if self.mode == 2:
+        if self.mode == 1:
+            self.__init_DFS()
+        elif self.mode == 2:
             self.__init_BFS()
+        self.maze.reset_colors()
+
+    def __init_DFS(self):
+        self.ds.append(self.start_node)
+        self.maze.print("DFS mode")
+
+    def __next_DFS_step(self):
+        if self.ds and Search.found == None:
+            s = self.ds.pop()
+            self.maze.print("(DFS mode) Visiting " + " " + str(s))
+            self.maze.tile_color[s.i][s.j][s.k] = 2
+            if self.prev_node != None:
+                self.maze.tile_color[self.prev_node.i][self.prev_node.j][self.prev_node.k] = 3
+            self.prev_node = s
+            if self.visited[s.i][s.j][s.k] == False:
+                    self.visited[s.i][s.j][s.k] = True
+                    children = s.get_children_nodes()
+                    if not children:
+                       return 0
+
+                    for child in children:
+                         if self.visited[child.i][child.j][child.k] == False:
+                            self.ds.append(child)
+                            self.maze.tile_color[child.i][child.j][child.k] = 1
+        elif Search.found != None:
+            self.maze.solved = True
+            self.maze.print("DFS cost is " + str(Search.found.get_path_cost()))
+        else:
+            self.maze.print("No Solution")
 
     def __init_BFS(self):
         self.ds.append(self.start_node)
         self.visited[self.start_node.i][self.start_node.j][self.start_node.k] = True
-        self.maze.reset_colors()
+        self.maze.print("BFS mode")
 
     def __next_BFS_step(self):
         if self.ds and Search.found == None:
@@ -58,12 +89,15 @@ class Search(object):
         else:
             self.maze.print("No Solution")
 
+
     def set_mode(self, mode):
         self.mode = mode
         self.__reset()
 
     def next_step(self):
-        if self.mode == 2:
+        if self.mode == 1:
+            self.__next_DFS_step()
+        elif self.mode == 2:
             self.__next_BFS_step()
 
     def get_path(self):     #method to return the path of the search
