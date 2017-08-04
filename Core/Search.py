@@ -129,6 +129,7 @@ class Search(object):
     def __init_A_star(self):
         self.ds.append((0,self.start_node))
         self.visited[self.start_node.i][self.start_node.j][self.start_node.k] = True
+        self.maze.print("A* mode with " + ("Manhattan distance" if self.mode == 4 else "Euclidean distance"))
 
     def __next_A_star_step(self):
         if self.ds and Search.found == None:

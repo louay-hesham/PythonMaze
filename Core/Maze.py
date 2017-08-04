@@ -131,9 +131,9 @@ class Maze(object):
 
     #Drawing the map into the GUI
     def draw(self,display_surf,wall_surf, stairs_surf, start_surf, end_surf, floor_surf):
-        tile_size = 44
-        self.font = pygame.font.SysFont("monospace", 25, True)
-
+        tile_size = 37
+        number_font = pygame.font.SysFont("monospace", 23, True)
+        text_font = pygame.font.SysFont("monospace", 18, True)
         #top floor seperator
         for k in range(0, self.width * self.height + self.height + 1):
             display_surf.blit(floor_surf,( k * tile_size, 0))
@@ -166,10 +166,10 @@ class Maze(object):
                         elif self.tile_color[k][i][j] == 3:
                             font_colour = (255, 0, 255)
 
-                        tile_label = self.font.render(str(self.map[k][i][j]), 1, font_colour)
-                        display_surf.blit(tile_label, ( (j + k * self.width + k + 1) * tile_size + 12, (i + 1) * tile_size + 12))
-                        cost_label = self.font.render(self.str, 1, (255, 255, 255)) #displaying final cost
-                        display_surf.blit(cost_label, ( 10, (self.length + 4) * tile_size))
+                        tile_label = number_font.render(str(self.map[k][i][j]), 1, font_colour)
+                        display_surf.blit(tile_label, ( (j + k * self.width + k + 1) * tile_size + 10, (i + 1) * tile_size + 10))
+                        cost_label = text_font.render(self.str, 1, (255, 255, 255)) #displaying final cost
+                        display_surf.blit(cost_label, ( 10, (self.length + 6) * tile_size))
                             
                     j = j + 1
                 if k == (self.height - 1): #if last floor, print the final floor sperator
@@ -179,10 +179,14 @@ class Maze(object):
         #bottom floor seperator
         for k in range(0, self.width * self.height + self.height + 1):
             display_surf.blit(floor_surf,( k * tile_size, (self.length + 1) * tile_size))
-        guide_label = self.font.render("Press 1 for DFS, 2 for BFS, 3 for UCS, 4 for A* with h = Manhattan Distance, 5 for A* with h = Euclidean distance, R to generate new map", 1, (255, 255, 255))
+        guide_label = text_font.render("Press 1 for DFS, 2 for BFS, 3 for UCS", 1, (255, 255, 255))
         display_surf.blit(guide_label, ( 10, (self.length + 2) * tile_size))
-        guide_label = self.font.render("Use left and right arrows to navigate through steps", 1, (255, 255, 255))
+        guide_label = text_font.render("4 for A* with h = Manhattan Distance, 5 for A* with h = Euclidean distance", 1, (255, 255, 255))
         display_surf.blit(guide_label, ( 10, (self.length + 3) * tile_size))
+        guide_label = text_font.render("R to generate new map", 1, (255, 255, 255))
+        display_surf.blit(guide_label, ( 10, (self.length + 4) * tile_size))
+        guide_label = text_font.render("Use right arrow to navigate to next step", 1, (255, 255, 255))
+        display_surf.blit(guide_label, ( 10, (self.length + 5) * tile_size))
 
     def print (self, str):
         self.str = str
