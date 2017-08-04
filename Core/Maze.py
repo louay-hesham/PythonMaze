@@ -9,7 +9,7 @@ import json
 class Maze(object):
 
     def __init__(self, **kwargs): #MAZe constructor
-        self.step_start = ()
+        self.step_node = ()
         self.step_end = ()
         self.solved = False
         self.__generate_random_map()
@@ -34,9 +34,13 @@ class Maze(object):
         template[i][j][k] = 'E'
 
         #generate numbers
+        self.tile_color = [None] * self.height
         for i in range(0, self.height):
+            self.tile_color[i] = [None] * self.length
             for j in range(0, self.length):
+                self.tile_color[i][j] = [None] * self.width
                 for k in range(0, self.width):
+                    self.tile_color[i][j][k] = 0
                     if template[i][j][k] == 'n':
                         template[i][j][k] = randint(1, math.ceil(min(self.width, self.length) / 2))
         self.map = template
@@ -145,18 +149,21 @@ class Maze(object):
                             tile = end_surf
                         display_surf.blit(tile,( (j + k * self.width + k + 1) * tile_size, (i + 1) * tile_size))
                     else:
-                        font_colour = (255, 255, 255)
-                        if (k, i, j) == self.step_start:
-                            font_colour = (255, 0, 0)
-                        elif (k, i, j) == self.step_end:
-                            font_colour = (0, 255, 0)
+                        if self.tile_color[k][i][j] == 0:
+                            font_colour = (255, 255, 255)
+                        elif self.tile_color[k][i][j] == 1:
+                            font_colour = (255, 255, 0)
+                        elif self.tile_color[k][i][j] == 2:
+                            font_colour = (100, 100, 255)
+                        elif self.tile_color[k][i][j] == 3:
+                            font_colour = (255, 0, 255)
 
                         tile_label = self.font.render(str(self.map[k][i][j]), 1, font_colour)
                         display_surf.blit(tile_label, ( (j + k * self.width + k + 1) * tile_size + 12, (i + 1) * tile_size + 12))
                         if self.solved:
                             cost_label = self.font.render(self.str, 1, (255, 255, 255)) #displaying final cost
                             display_surf.blit(cost_label, ( 10, (self.length + 4) * tile_size))
-                            step_label = self.font.render("Move from " + str(self.step_start) + " to " + str(self.step_end), 1, (255, 255, 255)) #displaying the moves step by step
+                            step_label = self.font.render("Move from " + str(self.step_node) + " to " + str(self.step_end), 1, (255, 255, 255)) #displaying the moves step by step
                             #print("Move from " + str(self.step_start) + " to " + str(self.step_end))
                             display_surf.blit(step_label, ( 10, (self.length + 5) * tile_size))
                     j = j + 1
