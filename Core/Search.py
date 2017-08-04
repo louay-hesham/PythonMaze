@@ -36,11 +36,12 @@ class Search(object):
     def __init_BFS(self):
         self.ds.append(self.start_node)
         self.visited[self.start_node.i][self.start_node.j][self.start_node.k] = True
+        self.maze.reset_colors()
 
     def __next_BFS_step(self):
         if self.ds and Search.found == None:
             s = self.ds.pop(0)
-            print(s)
+            self.maze.print("(BFS mode) Visiting " + " " + str(s))
             self.maze.tile_color[s.i][s.j][s.k] = 2
             if self.prev_node != None:
                 self.maze.tile_color[self.prev_node.i][self.prev_node.j][self.prev_node.k] = 3
@@ -57,7 +58,7 @@ class Search(object):
             self.maze.solved = True
             self.maze.print("BFS cost is " + str(Search.found.get_path_cost()))
         else:
-            print("No Solution")
+            self.maze.print("No Solution")
 
     def set_mode(self, mode):
         self.mode = mode
@@ -66,7 +67,6 @@ class Search(object):
     def next_step(self):
         if self.mode == 2:
             self.__next_BFS_step()
-
 
     def get_path(self):     #method to return the path of the search
         Search.found.get_path_cost()
