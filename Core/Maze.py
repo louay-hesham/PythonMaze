@@ -12,6 +12,7 @@ class Maze(object):
         self.step_node = ()
         self.step_end = ()
         self.solved = False
+        self.str = ""
         self.__generate_random_map()
 
     def __generate_random_map(self):
@@ -122,6 +123,12 @@ class Maze(object):
         with open('Core/Template-' + str(n) + '.JSON', 'w') as outfile:
             json.dump(template, outfile)
 
+    def reset_colors(self):
+        for i in range(0, self.height):
+            for j in range(0, self.length):
+                for k in range(0, self.width):
+                    self.tile_color[i][j][k] = 0
+
     #Drawing the map into the GUI
     def draw(self,display_surf,wall_surf, stairs_surf, start_surf, end_surf, floor_surf):
         tile_size = 44
@@ -160,12 +167,9 @@ class Maze(object):
 
                         tile_label = self.font.render(str(self.map[k][i][j]), 1, font_colour)
                         display_surf.blit(tile_label, ( (j + k * self.width + k + 1) * tile_size + 12, (i + 1) * tile_size + 12))
-                        if self.solved:
-                            cost_label = self.font.render(self.str, 1, (255, 255, 255)) #displaying final cost
-                            display_surf.blit(cost_label, ( 10, (self.length + 4) * tile_size))
-                            step_label = self.font.render("Move from " + str(self.step_node) + " to " + str(self.step_end), 1, (255, 255, 255)) #displaying the moves step by step
-                            #print("Move from " + str(self.step_start) + " to " + str(self.step_end))
-                            display_surf.blit(step_label, ( 10, (self.length + 5) * tile_size))
+                        cost_label = self.font.render(self.str, 1, (255, 255, 255)) #displaying final cost
+                        display_surf.blit(cost_label, ( 10, (self.length + 4) * tile_size))
+                            
                     j = j + 1
                 if k == (self.height - 1): #if last floor, print the final floor sperator
                     display_surf.blit(floor_surf,( (j + k * self.width + k + 1) * tile_size, (i + 1) * tile_size))
@@ -181,5 +185,4 @@ class Maze(object):
 
     def print (self, str):
         self.str = str
-        print(str)
 

@@ -31,9 +31,6 @@
     <Compile Include="Core\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GUI\Controller.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="GUI\MainGUI.py">
       <SubType>Code</SubType>
     </Compile>
