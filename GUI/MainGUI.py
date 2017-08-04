@@ -75,22 +75,6 @@ class MainGUI(object):
             self.on_render()
         self.on_cleanup()
 
-    def reset_gui(self):  #resetting the search and choosing a new one
-        if self.search_mode == 1:
-           x= self.search_tool.DFS()
-        elif self.search_mode == 2:
-           x= self.search_tool.BFS()
-        elif self.search_mode == 3:
-           x= self.search_tool.UCS()
-        elif self.search_mode == 4:
-           x= self.search_tool.ASM()
-        elif self.search_mode == 5:
-           x= self.search_tool.ASE()
-        if x==0:
-           return -1
-        self.path = self.search_tool.get_path()
-        self.controller = Controller(self.maze, self.path)
-
 
 
 
