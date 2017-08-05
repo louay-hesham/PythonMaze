@@ -5,73 +5,66 @@ import pygame
 
 class MainGUI(object):
     #window properties
-    windowWidth = 1000
-    windowHeight = 850
+    __windowWidth = 1024
+    __windowHeight = 720
  
     def __init__(self):
-        self._running = True
-        self._display_surf = None
+        self.__running = True
+        self.__display_surf = None
         self._image_surf = None
-        self._block_surf = None
-        self.maze = Maze()
+        self.__block_surf = None
+        self.__maze = Maze()
  
-    def on_init(self):
+    def __on_init(self):
         pygame.init()
-        pygame.RESIZABLE = True
-        info = pygame.display.Info()
-        windowWidth = int( info.current_w * 0.5)
-        windowHeight = int( info.current_h * 0.5)
-        
-        self._display_surf = pygame.display.set_mode((self.windowWidth,self.windowHeight), pygame.HWSURFACE)
-        self.myfont = pygame.font.SysFont("monospace", 15)
+        self.__display_surf = pygame.display.set_mode((self.__windowWidth,self.__windowHeight), pygame.RESIZABLE)
         pygame.display.set_caption('3D Maze')
-        self._running = True
+        self.__running = True
         #display tiles
-        self._block_surf = pygame.image.load("GUI/block.png").convert()
-        self._stairs_surf = pygame.image.load("GUI/stairs.png").convert()
-        self._start_surf = pygame.image.load("GUI/start.png").convert()
-        self._end_surf = pygame.image.load("GUI/end.png").convert()
-        self._floor_surf = pygame.image.load("GUI/floor.png").convert()
+        self.__block_surf = pygame.image.load("GUI/block.png").convert()
+        self.__stairs_surf = pygame.image.load("GUI/stairs.png").convert()
+        self.__start_surf = pygame.image.load("GUI/start.png").convert()
+        self.__end_surf = pygame.image.load("GUI/end.png").convert()
+        self.__floor_surf = pygame.image.load("GUI/floor.png").convert()
  
-    def on_render(self):
+    def __on_render(self):
         #rendering display
-        self._display_surf.fill((0,0,0))
-        self.maze.draw(self._display_surf, self._block_surf, self._stairs_surf, self._start_surf,  self._end_surf, self._floor_surf)
+        self.__display_surf.fill((0,0,0))
+        self.__maze.draw(self.__display_surf, self.__block_surf, self.__stairs_surf, self.__start_surf,  self.__end_surf, self.__floor_surf)
         pygame.display.flip()
  
-    def on_cleanup(self):
+    def __on_cleanup(self):
         pygame.quit()
  
     def on_execute(self):
-        if self.on_init() == False:
-            self._running = False
-        self.on_render()
-        self.search_tool = Search(self.maze.start_node, self.maze.end_node, self.maze)        
-        while( self._running ):
-            x=0
+        if self.__on_init() == False:
+            self.__running = False
+        self.__on_render()
+        self.__search_tool = Search(self.__maze.start_node, self.__maze.end_node, self.__maze)        
+        while( self.__running ):
             events = pygame.event.get()
             for event in events:
                 #responding to pressing a key
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        self._running = False
+                        self.__running = False
                     if event.key == pygame.K_1: #DFS
-                        self.search_tool.set_mode(1)
+                        self.__search_tool.set_mode(1)
                     if event.key == pygame.K_2: #BFS
-                        self.search_tool.set_mode(2)
+                        self.__search_tool.set_mode(2)
                     if event.key == pygame.K_3: #UCS
-                        self.search_tool.set_mode(3)
+                        self.__search_tool.set_mode(3)
                     if event.key == pygame.K_4:
-                        self.search_tool.set_mode(4)
+                        self.__search_tool.set_mode(4)
                     if event.key == pygame.K_5:
-                        self.search_tool.set_mode(5)
+                        self.__search_tool.set_mode(5)
                     if event.key == pygame.K_r: #new random map
-                        self.maze = Maze()
-                        self.search_tool = Search(self.maze.start_node,self.maze.end_node, self.maze) 
-                    if event.key == pygame.K_RIGHT and self.search_tool.mode != 0: #next step
-                        self.search_tool.next_step()
-            self.on_render()
-        self.on_cleanup()
+                        self.__maze = Maze()
+                        self.__search_tool = Search(self.__maze.start_node,self.__maze.end_node, self.__maze) 
+                    if event.key == pygame.K_RIGHT and self.__search_tool.mode != 0: #next step
+                        self.__search_tool.next_step()
+            self.__on_render()
+        self.__on_cleanup()
 
 
 

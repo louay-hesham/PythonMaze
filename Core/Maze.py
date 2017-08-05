@@ -9,10 +9,8 @@ import json
 class Maze(object):
 
     def __init__(self, **kwargs): #MAZe constructor
-        self.step_node = ()
-        self.step_end = ()
         self.solved = False
-        self.str = ""
+        self.__str = ""
         self.__generate_random_map()
 
     def __generate_random_map(self):
@@ -168,7 +166,7 @@ class Maze(object):
 
                         tile_label = number_font.render(str(self.map[k][i][j]), 1, font_colour)
                         display_surf.blit(tile_label, ( (j + k * self.width + k + 1) * tile_size + 10, (i + 1) * tile_size + 10))
-                        cost_label = text_font.render(self.str, 1, (255, 255, 255)) #displaying final cost
+                        cost_label = text_font.render(self.__str, 1, (255, 255, 255)) #displaying final cost
                         display_surf.blit(cost_label, ( 10, (self.length + 6) * tile_size))
                             
                     j = j + 1
@@ -189,5 +187,5 @@ class Maze(object):
         display_surf.blit(guide_label, ( 10, (self.length + 5) * tile_size))
 
     def print (self, str):
-        self.str = str
+        self.__str = str
 
