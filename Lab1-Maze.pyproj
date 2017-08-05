@@ -31,9 +31,6 @@
     <Compile Include="Core\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GUI\Controller.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="GUI\MainGUI.py">
       <SubType>Code</SubType>
     </Compile>
@@ -46,7 +43,9 @@
     <Compile Include="Core\Maze.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Core\Maze.JSON" />
+    <Content Include="Core\Template-0.JSON" />
+    <Content Include="Core\Template-1.JSON" />
+    <Content Include="Core\Template-2.JSON" />
     <Content Include="GUI\end.png" />
     <Content Include="GUI\floor.png" />
     <Content Include="GUI\stairs.png" />

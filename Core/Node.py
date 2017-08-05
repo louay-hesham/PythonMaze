@@ -7,15 +7,18 @@ class Node(object):
         self.i = i;
         self.j = j;
         self.k = k;
-        self.parent = parent
-        self.n = maze.map[i][j][k];
-        self.maze = maze;
-        self.visited = [None] * maze.height
+        self.__parent = parent
+        if parent == None:
+            self.n = 1
+        else:
+            self.n = maze.map[i][j][k];
+        self.__maze = maze;
+        self.__visited = [None] * maze.height
         self.cost = 0
         for i in range(0,maze.height):
-            self.visited[i] = [None] * maze.length
+            self.__visited[i] = [None] * maze.length
             for j in range(0, maze.length):
-                self.visited[i][j] = [False] * maze.width
+                self.__visited[i][j] = [False] * maze.width
 
     def __str__(self):  #method to print node line
         return str(self.n) + ' at (' + str(self.i) + ', ' + str(self.j) + ', ' + str(self.k) + ')' 
@@ -42,57 +45,56 @@ class Node(object):
             n_other = 1
         return n_self < n_other
  
-
     def __get_children_coordinates(self, i, j, k, steps):  #recursive method to return set of unvisited children nodes to a given node
-        if self.visited[i][j][k]:
+        if self.__visited[i][j][k]:
             return
 
-        if self.maze.map[i][j][k] =='E':
-            Search.found = Node(i,j,k, self.maze, self)
+        if self.__maze.map[i][j][k] =='E':
+            Search.found = Node(i,j,k, self.__maze, self)
             return
 
-        self.visited[i][j][k] = True
-        if self.maze.map[i][j][k] == '#':
+        self.__visited[i][j][k] = True
+        if self.__maze.map[i][j][k] == '#':
             return
 
         if steps == 0:
-            self.visited[i][j][k] = False
-            return {Node(i, j, k, self.maze, self)}
+            self.__visited[i][j][k] = False
+            return {Node(i, j, k, self.__maze, self)}
 
-        children_set = set()
+        childrens = set()
         #right
-        if (k + 1) != self.maze.width:
+        if (k + 1) != self.__maze.width:
             x = self.__get_children_coordinates(i, j, k + 1, steps - 1)
             if x is not None:
-                children_set.update(x)
+                childrens.update(x)
         #left
         if (k - 1) != -1:
             x = self.__get_children_coordinates(i, j, k - 1, steps - 1)
             if x is not None:
-                children_set.update(x)
+                childrens.update(x)
         #forward
-        if (j + 1) != self.maze.length:
+        if (j + 1) != self.__maze.length:
             x = self.__get_children_coordinates(i, j + 1, k, steps - 1)
             if x is not None:
-                children_set.update(x)
+                childrens.update(x)
         #backwards
         if (j - 1) != -1:
             x = self.__get_children_coordinates(i, j - 1, k, steps - 1)
             if x is not None:
-                children_set.update(x)
+                childrens.update(x)
         #up
-        if (i + 1) != self.maze.height and self.maze.map[i][j][k] == 'A' and self.maze.map[i + 1][j][k] == 'A':
+        if (i + 1) != self.__maze.height and self.__maze.map[i][j][k] == 'A' and self.__maze.map[i + 1][j][k] == 'A':
             x = self.__get_children_coordinates(i + 1, j, k, steps - 1)
             if x is not None:
-                children_set.update(x)
+                childrens.update(x)
         #down
-        if (i - 1) != -1 and self.maze.map[i][j][k] == 'A' and self.maze.map[i - 1][j][k] == 'A':
+        if (i - 1) != -1 and self.__maze.map[i][j][k] == 'A' and self.__maze.map[i - 1][j][k] == 'A':
             x = self.__get_children_coordinates(i - 1, j, k, steps - 1)
             if x is not None:
-                children_set.update(x)
+                childrens.update(x)
 
-        self.visited[i][j][k] = False
-        return children_set
+        self.__visited[i][j][k] = False
+        return childrens
 
     def get_children_nodes(self):
         steps = 0
@@ -103,15 +105,15 @@ class Node(object):
         elif self.n == 'E':
             steps = 0
 
-        return list(self.__get_children_coordinates(self.i, self.j, self.k, steps))
+        return self.__get_children_coordinates(self.i, self.j, self.k, steps)
 
     def get_path_cost(self): #method to calculate the total cost of a path
         if self.cost != 0:
             return self.cost
 
         parent_cost = 0
-        if self.parent != None:
-            parent_cost = self.parent.get_path_cost()
+        if self.__parent != None:
+            parent_cost = self.__parent.get_path_cost()
 
         Node.path.append(self)
        
