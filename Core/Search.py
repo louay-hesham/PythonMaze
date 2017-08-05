@@ -38,7 +38,9 @@ class Search(object):
             self.__init_UCS()
         elif self.mode == 4 or self.mode == 5:
             self.__init_A_star()
-        self.maze.reset_colors()
+        elif self.mode == 6 or self.mode == 7:
+            self.__init_greedy()
+        self.__maze.reset_colors()
 
     def __init_DFS(self):
         self.__ds.append(self.__start_node)
@@ -160,13 +162,39 @@ class Search(object):
         else:
             self.__maze.print("No Solution")
 
+    def __init_greedy(self):
+        self.__ds.append(self.__start_node)
+        self.__visited[self.__start_node.i][self.__start_node.j][self.__start_node.k] = True
+        self.__maze.print("Greedy mode with " + ("Manhattan distance" if self.mode == 6 else "Euclidean distance"))
+
+    def __next_greedy_step(self):
+        if self.__ds and Search.found == None:
+            s = min(self.__ds, key = lambda o : self.__heuristic(o))
+            self.__ds.remove(s)
+
+            self.__maze.print("(Greedy mode with " + ("Manhattan distance" if self.mode == 6 else "Euclidean distance") + ") Visiting " + " " + str(s))
+            self.__maze.tile_color[s.i][s.j][s.k] = 2
+            if self.__prev_node != None:
+                self.__maze.tile_color[self.__prev_node.i][self.__prev_node.j][self.__prev_node.k] = 3
+            self.__prev_node = s
+
+            if s.n != 'E':
+                children = s.get_children_nodes()
+                if not children:
+                    return 0
+                for child in children:
+                    if self.__visited[child.i][child.j][child.k] == False:
+                        self.__maze.tile_color[child.i][child.j][child.k] = 1
+                        self.__visited[child.i][child.j][child.k] = True
+                        if s.n == "A" or s.n == 'S' or s.n == 'E':
+                            heapq.heappush(self.__ds,child)
                         else:
-                            heapq.heappush(self.ds,(s[0] + s[1].n, child))
+                            heapq.heappush(self.__ds,child)
         elif Search.found != None:
-            self.maze.solved = True
-            self.maze.print("A* with " + ("Manhattan distance" if self.mode == 4 else "Euclidean distance") + " cost is " + str(Search.found.get_path_cost()))
+            self.__maze.solved = True
+            self.__maze.print("Greedy with " + ("Manhattan distance" if self.mode == 6 else "Euclidean distance") + " cost is " + str(Search.found.get_path_cost()))
         else:
-            self.maze.print("No Solution")
+            self.__maze.print("No Solution")
 
     def __manhattan(self, n):
         return abs(n.i - self.__end_node.i) + abs(n.j - self.__end_node.j) + abs(n.k - self.__end_node.k)
@@ -175,12 +203,11 @@ class Search(object):
         return math.sqrt(math.pow((n.i - self.__end_node.i),2) + math.pow((n.j -self.__end_node.j),2) + math.pow((n.k -self.__end_node.k),2))
     
     def __heuristic(self, n):
-            return self.__manhattan(n) if self.mode == 4 else self.__Euc(n)
+            return self.__manhattan(n) if self.mode % 2 == 0 else self.__Euc(n)
 
     def __get_path(self):     #method to return the path of the search
         Search.found.get_path_cost()
         return Search.found.get_path()
-
 
     def set_mode(self, mode):
         self.mode = mode
@@ -195,10 +222,8 @@ class Search(object):
             self.__next_UCS_step()
         elif self.mode == 4 or self.mode == 5:
             self.__next_A_star_step()
-
-    def get_path(self):     #method to return the path of the search
-        Search.found.get_path_cost()
-        return Search.found.get_path()
+        elif self.mode == 6 or self.mode == 7:
+            self.__next_greedy_step()
 
    
     # NOT NEEDED ANYMORE, sebtaha 3shan catherine met2olsh eny bamsa7 ay 7aga 2ala2iha f weshy :D

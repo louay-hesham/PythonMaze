@@ -58,6 +58,10 @@ class MainGUI(object):
                         self.__search_tool.set_mode(4)
                     if event.key == pygame.K_5:
                         self.__search_tool.set_mode(5)
+                    if event.key == pygame.K_6:
+                        self.__search_tool.set_mode(6)
+                    if event.key == pygame.K_7:
+                        self.__search_tool.set_mode(7)
                     if event.key == pygame.K_r: #new random map
                         self.__maze = Maze()
                         self.__search_tool = Search(self.__maze.start_node,self.__maze.end_node, self.__maze) 
