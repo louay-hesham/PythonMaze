@@ -9,10 +9,8 @@ import json
 class Maze(object):
 
     def __init__(self, **kwargs): #MAZe constructor
-        self.step_node = ()
-        self.step_end = ()
         self.solved = False
-        self.str = ""
+        self.__str = ""
         self.__generate_random_map()
 
     def __generate_random_map(self):
@@ -168,8 +166,8 @@ class Maze(object):
 
                         tile_label = number_font.render(str(self.map[k][i][j]), 1, font_colour)
                         display_surf.blit(tile_label, ( (j + k * self.width + k + 1) * tile_size + 10, (i + 1) * tile_size + 10))
-                        cost_label = text_font.render(self.str, 1, (255, 255, 255)) #displaying final cost
-                        display_surf.blit(cost_label, ( 10, (self.length + 6) * tile_size))
+                        cost_label = text_font.render(self.__str, 1, (255, 255, 255)) #displaying final cost
+                        display_surf.blit(cost_label, ( 10, (self.length + 7) * tile_size))
                             
                     j = j + 1
                 if k == (self.height - 1): #if last floor, print the final floor sperator
@@ -179,15 +177,17 @@ class Maze(object):
         #bottom floor seperator
         for k in range(0, self.width * self.height + self.height + 1):
             display_surf.blit(floor_surf,( k * tile_size, (self.length + 1) * tile_size))
-        guide_label = text_font.render("Press 1 for DFS, 2 for BFS, 3 for UCS", 1, (255, 255, 255))
+        guide_label = text_font.render("Press 1 for DFS, 2 for BFS, 3 for UCS,", 1, (255, 255, 255))
         display_surf.blit(guide_label, ( 10, (self.length + 2) * tile_size))
-        guide_label = text_font.render("4 for A* with h = Manhattan Distance, 5 for A* with h = Euclidean distance", 1, (255, 255, 255))
+        guide_label = text_font.render("4 for A* with h = Manhattan Distance, 5 for A* with h = Euclidean distance,", 1, (255, 255, 255))
         display_surf.blit(guide_label, ( 10, (self.length + 3) * tile_size))
-        guide_label = text_font.render("R to generate new map", 1, (255, 255, 255))
+        guide_label = text_font.render("6 for greedy with h = Manhattan Distance, 7 for greedy with h = Euclidean distance,", 1, (255, 255, 255))
         display_surf.blit(guide_label, ( 10, (self.length + 4) * tile_size))
-        guide_label = text_font.render("Use right arrow to navigate to next step", 1, (255, 255, 255))
+        guide_label = text_font.render("R to generate new map", 1, (255, 255, 255))
         display_surf.blit(guide_label, ( 10, (self.length + 5) * tile_size))
+        guide_label = text_font.render("Use right arrow to navigate to next step", 1, (255, 255, 255))
+        display_surf.blit(guide_label, ( 10, (self.length + 6) * tile_size))
 
     def print (self, str):
-        self.str = str
+        self.__str = str
 
