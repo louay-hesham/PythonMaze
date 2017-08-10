@@ -21,7 +21,3 @@ This python code generates a random 3D maze, then tries to solve it with differe
 * **Blue:** node currently being visited in this step
 * **Purple:** node previously visited in previous steps
 * **Cyan:** node in the final path to the goal
-
-```html
-<font color="green"> Some green text </font>
-```
