@@ -198,7 +198,7 @@ class Maze(object):
                         tile_label = number_font.render(str(self.map[k][i][j]), 1, font_colour)
                         display_surf.blit(tile_label, ( (j + k * self.width + k + 1) * tile_size + 5, (i + 1) * tile_size + 5))
                         cost_label = text_font.render(self.__str, 1, (255, 255, 255)) #displaying final cost
-                        display_surf.blit(cost_label, ( 10, (self.length + 7) * tile_size))
+                        display_surf.blit(cost_label, ( 10, (self.length + 8) * tile_size))
                             
                     j = j + 1
                 if k == (self.height - 1): #if last floor, print the final floor sperator
@@ -216,8 +216,10 @@ class Maze(object):
         display_surf.blit(guide_label, ( 10, (self.length + 4) * tile_size))
         guide_label = text_font.render("R to generate new map", 1, (255, 255, 255))
         display_surf.blit(guide_label, ( 10, (self.length + 5) * tile_size))
-        guide_label = text_font.render("Use right arrow to navigate to next step", 1, (255, 255, 255))
+        guide_label = text_font.render("A, B, C, D or E to load a predefined map", 1, (255, 255, 255))
         display_surf.blit(guide_label, ( 10, (self.length + 6) * tile_size))
+        guide_label = text_font.render("Use right arrow to navigate to next step", 1, (255, 255, 255))
+        display_surf.blit(guide_label, ( 10, (self.length + 7) * tile_size))
 
     def print (self, str):
         self.__str = str
