@@ -5,7 +5,7 @@ import pygame
 
 class MainGUI(object):
     #window properties
-    __windowWidth = 1024
+    __windowWidth = 1200
     __windowHeight = 720
  
     def __init__(self):
@@ -13,7 +13,7 @@ class MainGUI(object):
         self.__display_surf = None
         self._image_surf = None
         self.__block_surf = None
-        self.__maze = Maze()
+        self.__maze = Maze(None)
  
     def __on_init(self):
         pygame.init()
@@ -41,7 +41,7 @@ class MainGUI(object):
             self.__running = False
         self.__on_render()
         self.__search_tool = Search(self.__maze.start_node, self.__maze.end_node, self.__maze)        
-        while( self.__running ):
+        while(self.__running):
             events = pygame.event.get()
             for event in events:
                 #responding to pressing a key
@@ -63,8 +63,23 @@ class MainGUI(object):
                     if event.key == pygame.K_7:
                         self.__search_tool.set_mode(7)
                     if event.key == pygame.K_r: #new random map
-                        self.__maze = Maze()
-                        self.__search_tool = Search(self.__maze.start_node,self.__maze.end_node, self.__maze) 
+                        self.__maze = Maze(None)
+                        self.__search_tool = Search(self.__maze.start_node,self.__maze.end_node, self.__maze)
+                    if event.key == pygame.K_a:
+                        self.__maze = Maze("test1.txt")
+                        self.__search_tool = Search(self.__maze.start_node,self.__maze.end_node, self.__maze)
+                    if event.key == pygame.K_b:
+                        self.__maze = Maze("test2.txt")
+                        self.__search_tool = Search(self.__maze.start_node,self.__maze.end_node, self.__maze)
+                    if event.key == pygame.K_c:
+                        self.__maze = Maze("test3.txt")
+                        self.__search_tool = Search(self.__maze.start_node,self.__maze.end_node, self.__maze)
+                    if event.key == pygame.K_d:
+                        self.__maze = Maze("test4.txt")
+                        self.__search_tool = Search(self.__maze.start_node,self.__maze.end_node, self.__maze)
+                    if event.key == pygame.K_e:
+                        self.__maze = Maze("test5.txt")
+                        self.__search_tool = Search(self.__maze.start_node,self.__maze.end_node, self.__maze)
                     if event.key == pygame.K_RIGHT and self.__search_tool.mode != 0: #next step
                         self.__search_tool.next_step()
             self.__on_render()

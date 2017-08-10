@@ -67,8 +67,15 @@ class Search(object):
         elif Search.found != None:
             self.__maze.solved = True
             self.__maze.print("DFS cost is " + str(Search.found.get_path_cost()))
+            print("DFS cost is " + str(Search.found.get_path_cost()))
+            print("Path is:")
+            for n in Node.path:
+                print(n)
+                self.__maze.tile_color[n.i][n.j][n.k] = 4
+            print(" ")
         else:
             self.__maze.print("No Solution")
+            print("No Solution")
 
     def __init_BFS(self):
         self.__ds.append(self.__start_node)
@@ -94,8 +101,15 @@ class Search(object):
         elif Search.found != None:
             self.__maze.solved = True
             self.__maze.print("BFS cost is " + str(Search.found.get_path_cost()))
+            print("BFS cost is " + str(Search.found.get_path_cost()))
+            print("Path is:")
+            for n in Node.path:
+                print(n)
+                self.__maze.tile_color[n.i][n.j][n.k] = 4
+            print(" ")
         else:
             self.__maze.print("No Solution")
+            print("No Solution")
 
     def __init_UCS(self):
         self.__ds.append((0,self.__start_node))
@@ -104,7 +118,7 @@ class Search(object):
 
     def __next_UCS_step(self):
         if self.__ds and Search.found == None:
-            s= heapq.heappop(self.__ds)
+            s = heapq.heappop(self.__ds)
             self.__maze.print("(UCS mode) Visiting " + " " + str(s[1]))
             self.__maze.tile_color[s[1].i][s[1].j][s[1].k] = 2
             if self.__prev_node != None:
@@ -125,8 +139,15 @@ class Search(object):
         elif Search.found != None:
             self.__maze.solved = True
             self.__maze.print("UCS cost is " + str(Search.found.get_path_cost()))
+            print("UCS cost is " + str(Search.found.get_path_cost()))
+            print("Path is:")
+            for n in Node.path:
+                print(n)
+                self.__maze.tile_color[n.i][n.j][n.k] = 4
+            print(" ")
         else:
             self.__maze.print("No Solution")
+            print("No Solution")
 
     def __init_A_star(self):
         self.__ds.append((0,self.__start_node))
@@ -159,8 +180,15 @@ class Search(object):
         elif Search.found != None:
             self.__maze.solved = True
             self.__maze.print("A* with " + ("Manhattan distance" if self.mode == 4 else "Euclidean distance") + " cost is " + str(Search.found.get_path_cost()))
+            print("A* with " + ("Manhattan distance" if self.mode == 4 else "Euclidean distance") + " cost is " + str(Search.found.get_path_cost()))
+            print("Path is:")
+            for n in Node.path:
+                print(n)
+                self.__maze.tile_color[n.i][n.j][n.k] = 4
+            print(" ")
         else:
             self.__maze.print("No Solution")
+            print("No Solution")
 
     def __init_greedy(self):
         self.__ds.append(self.__start_node)
@@ -193,14 +221,21 @@ class Search(object):
         elif Search.found != None:
             self.__maze.solved = True
             self.__maze.print("Greedy with " + ("Manhattan distance" if self.mode == 6 else "Euclidean distance") + " cost is " + str(Search.found.get_path_cost()))
+            print("Greedy with " + ("Manhattan distance" if self.mode == 6 else "Euclidean distance") + " cost is " + str(Search.found.get_path_cost()))
+            print("Path is:")
+            for n in Node.path:
+                print(n)
+                self.__maze.tile_color[n.i][n.j][n.k] = 4
+            print(" ")
         else:
             self.__maze.print("No Solution")
+            print("No Solution")
 
     def __manhattan(self, n):
         return abs(n.i - self.__end_node.i) + abs(n.j - self.__end_node.j) + abs(n.k - self.__end_node.k)
 
     def __Euc(self, n):
-        return math.sqrt(math.pow((n.i - self.__end_node.i),2) + math.pow((n.j -self.__end_node.j),2) + math.pow((n.k -self.__end_node.k),2))
+        return math.sqrt(math.pow((n.i - self.__end_node.i),2) + math.pow((n.j - self.__end_node.j),2) + math.pow((n.k - self.__end_node.k),2))
     
     def __heuristic(self, n):
             return self.__manhattan(n) if self.mode % 2 == 0 else self.__Euc(n)
@@ -224,113 +259,4 @@ class Search(object):
             self.__next_A_star_step()
         elif self.mode == 6 or self.mode == 7:
             self.__next_greedy_step()
-
-   
-    # NOT NEEDED ANYMORE, sebtaha 3shan catherine met2olsh eny bamsa7 ay 7aga 2ala2iha f weshy :D
-    # bas ana 3yz amsa7ha el sara7a
-
-    def BFS(self):  #breadth first search: Traverses the search saves the path and prints the total cost
-        self.__reset()
-        self.__ds.append(self.__start_node)
-        self.__visited[self.__start_node.i][self.__start_node.j][self.__start_node.k] = True
-        while self.__ds and Search.found == None:
-            s = self.__ds.pop(0)
-            print(s)
-            children = s.get_children_nodes()
-            if not children:
-                return 0
-            for child in children:
-                if self.__visited[child.i][child.j][child.k] == False:
-                    self.__ds.append(child)
-                    self.__visited[child.i][child.j][child.k] = True
-        self.__maze.solved = True
-        self.__maze.print("BFS cost is " + str(Search.found.get_path_cost()))
-
-    def UCS(self):  #uniform cost search: Traverses the search and finds the minimum cost path 
-        self.__reset()
-        self.__ds.append((0,self.__start_node))
-        self.__visited[self.__start_node.i][self.__start_node.j][self.__start_node.k] = True
-        while self.__ds and Search.found == None:
-            s= heapq.heappop(self.__ds)
-            print(s[1])
-            if s[1].n == 'E':
-                break
-            children = s[1].get_children_nodes()
-            if not children:
-                return 0
-            for child in children:
-                if self.__visited[child.i][child.j][child.k] == False:
-                    self.__visited[child.i][child.j][child.k] = True
-                    if s[1].n == "A" or s[1].n == 'S' or s[1].n == 'E':
-                        heapq.heappush(self.__ds,(s[0] + 1, child))
-                    else:
-                        heapq.heappush(self.__ds,(s[0] + s[1].n, child))
-        self.__maze.solved = True 
-        self.__maze.print("UCS cost is " + str(Search.found.get_path_cost()))
-
-    def DFS(self): #depth first search: Traverses the search saves the path and prints the total cost
-        self.__reset()
-        self.__ds.append(self.__start_node)
-        while self.__ds and Search.found == None:
-            s = self.__ds.pop()
-            print(s)
-            if self.__visited[s.i][s.j][s.k] == False:
-                    self.__visited[s.i][s.j][s.k] = True
-                    children = s.get_children_nodes()
-                    if not children:
-                       return 0
-
-                    for child in children:
-                         if self.__visited[child.i][child.j][child.k] == False:
-                            self.__ds.append(child)
-        self.__maze.solved = True
-        self.__maze.print("DFS cost is " + str(Search.found.get_path_cost()))   
-
-    def ASM(self):  
-        self.__reset()
-        self.__ds.append((0,self.__start_node))
-        self.__visited[self.__start_node.i][self.__start_node.j][self.__start_node.k] = True
-        while self.__ds and Search.found == None:
-            s = min(self.__ds, key=lambda o:o[0] + self.__manhattan(o[1], self.__end_node))
-            self.__ds.remove(s)
-            #s= heapq.heappop(self.ds)
-            print(s[1])
-            if s[1].n == 'E':
-                break
-            children = s[1].get_children_nodes()
-            if not children:
-                return 0
-            for child in children:
-                if self.__visited[child.i][child.j][child.k] == False:
-                    self.__visited[child.i][child.j][child.k] = True
-                    if s[1].n == "A" or s[1].n == 'S' or s[1].n == 'E':
-                        heapq.heappush(self.__ds,(s[0] + 1, child))
-                    else:
-                        heapq.heappush(self.__ds,(s[0] + s[1].n, child))
-        self.__maze.solved = True 
-        self.__maze.print("ASM cost is " + str(Search.found.get_path_cost())) 
-
-    def ASE(self):   
-        self.__reset()
-        self.__ds.append((0,self.__start_node))
-        self.__visited[self.__start_node.i][self.__start_node.j][self.__start_node.k] = True
-        while self.__ds and Search.found == None:
-            s = min(self.__ds, key=lambda o:o[0] + self.__Euc(o[1], self.__end_node))
-            self.__ds.remove(s)
-            #s= heapq.heappop(self.ds)
-            print(s[1])
-            if s[1].n == 'E':
-                break
-            children = s[1].get_children_nodes()
-            if not children:
-                return 0
-            for child in children:
-                if self.__visited[child.i][child.j][child.k] == False:
-                    self.__visited[child.i][child.j][child.k] = True
-                    if s[1].n == "A" or s[1].n == 'S' or s[1].n == 'E':
-                        heapq.heappush(self.__ds,(s[0] + 1, child))
-                    else:
-                        heapq.heappush(self.__ds,(s[0] + s[1].n, child))
-        self.__maze.solved = True 
-        self.__maze.print("ASE cost is " + str(Search.found.get_path_cost())) 
         
