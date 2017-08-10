@@ -41,7 +41,7 @@ class MainGUI(object):
             self.__running = False
         self.__on_render()
         self.__search_tool = Search(self.__maze.start_node, self.__maze.end_node, self.__maze)        
-        while( self.__running ):
+        while(self.__running):
             events = pygame.event.get()
             for event in events:
                 #responding to pressing a key
