@@ -77,6 +77,9 @@ class MainGUI(object):
                     if event.key == pygame.K_d:
                         self.__maze = Maze("test4.txt")
                         self.__search_tool = Search(self.__maze.start_node,self.__maze.end_node, self.__maze)
+                    if event.key == pygame.K_e:
+                        self.__maze = Maze("test5.txt")
+                        self.__search_tool = Search(self.__maze.start_node,self.__maze.end_node, self.__maze)
                     if event.key == pygame.K_RIGHT and self.__search_tool.mode != 0: #next step
                         self.__search_tool.next_step()
             self.__on_render()
