@@ -158,8 +158,8 @@ class Maze(object):
 
     #Drawing the map into the GUI
     def draw(self,display_surf,wall_surf, stairs_surf, start_surf, end_surf, floor_surf):
-        tile_size = 37
-        number_font = pygame.font.SysFont("monospace", 23, True)
+        tile_size = 27
+        number_font = pygame.font.SysFont("monospace", 18, True)
         text_font = pygame.font.SysFont("monospace", 18, True)
         #top floor seperator
         for k in range(0, self.width * self.height + self.height + 1):
@@ -194,7 +194,7 @@ class Maze(object):
                             font_colour = (255, 0, 255)
 
                         tile_label = number_font.render(str(self.map[k][i][j]), 1, font_colour)
-                        display_surf.blit(tile_label, ( (j + k * self.width + k + 1) * tile_size + 10, (i + 1) * tile_size + 10))
+                        display_surf.blit(tile_label, ( (j + k * self.width + k + 1) * tile_size + 5, (i + 1) * tile_size + 5))
                         cost_label = text_font.render(self.__str, 1, (255, 255, 255)) #displaying final cost
                         display_surf.blit(cost_label, ( 10, (self.length + 7) * tile_size))
                             
