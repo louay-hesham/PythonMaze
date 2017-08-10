@@ -29,7 +29,7 @@ class Maze(object):
                 self.map[0][i] = [None] * self.width
                 self.tile_color[0][i] = [None] * self.width
                 line = next(f)
-                for j in range (0, self.width):
+                for j in range(0, self.width):
                     self.tile_color[0][i][j] = 0
                     c = line[j] 
                     if c in '0123456789':
@@ -45,7 +45,9 @@ class Maze(object):
     def __generate_random_map(self):
         template = self.__get_random_template()
         #generate random start point
-        i = 0; j = 0; k = 0;
+        i = 0
+        j = 0
+        k = 0
         while template[i][j][k] != 'n':
             i = randint(0, self.height - 1)
             j = randint(0, self.length - 1)
@@ -78,7 +80,7 @@ class Maze(object):
         temp_n = randint(0,2)
         try:
             with open("Core/Template-" + str(temp_n) + ".JSON") as data_file:  
-                #JSON file is found and can be loaded  
+                #JSON file is found and can be loaded
                 template = json.load(data_file)
         except (FileNotFoundError, TypeError, ValueError) as e:
             #JSON file can not be found or is unreadable
@@ -103,23 +105,23 @@ class Maze(object):
                   ['#', 'n', 'n', 'n', '#', '#', '#', 'n', '#', 'n', 'n', 'n', '#', 'n', '#', 'n', '#']]]
                 
 
-        template2 = [[[ 'n', 'n', 'n', '#', 'n'],
-                  [ '#', 'n', 'n', 'n', 'n'],
-                  [ 'n', 'n', '#', '#', 'n'],
-                  [ 'n', '#', 'n', 'n', 'n'],
-                  [ 'n', '#', 'A', 'n', 'n']],
+        template2 = [[['n', 'n', 'n', '#', 'n'],
+                  ['#', 'n', 'n', 'n', 'n'],
+                  ['n', 'n', '#', '#', 'n'],
+                  ['n', '#', 'n', 'n', 'n'],
+                  ['n', '#', 'A', 'n', 'n']],
 
-                 [[ 'n', 'n', 'A', 'n', 'n'],
-                  [ 'n', '#', 'n', '#', '#'],
-                  [ 'n', '#', 'n', 'n', 'n'],
-                  [ 'n', '#', '#', '#', 'n'],
-                  [ 'n', 'n', 'A', 'n', 'n']],
+                 [['n', 'n', 'A', 'n', 'n'],
+                  ['n', '#', 'n', '#', '#'],
+                  ['n', '#', 'n', 'n', 'n'],
+                  ['n', '#', '#', '#', 'n'],
+                  ['n', 'n', 'A', 'n', 'n']],
                 
-                 [[ '#', 'n', 'A', 'n', 'n'],
-                  [ 'n', 'n', 'n', 'n', 'n'],
-                  [ 'n', '#', '#', '#', 'n'],
-                  [ 'n', 'n', 'n', '#', 'n'],
-                  [ 'n', '#', 'n', '#', 'n']]]
+                 [['#', 'n', 'A', 'n', 'n'],
+                  ['n', 'n', 'n', 'n', 'n'],
+                  ['n', '#', '#', '#', 'n'],
+                  ['n', 'n', 'n', '#', 'n'],
+                  ['n', '#', 'n', '#', 'n']]]
 
         template3 = [[['n', '#', '#', '#', 'n', 'n', 'n', 'n'],
                       ['n', 'n', 'n', '#', '#', '#', '#', 'n'],
@@ -163,15 +165,15 @@ class Maze(object):
         text_font = pygame.font.SysFont("monospace", 18, True)
         #top floor seperator
         for k in range(0, self.width * self.height + self.height + 1):
-            display_surf.blit(floor_surf,( k * tile_size, 0))
+            display_surf.blit(floor_surf,(k * tile_size, 0))
 
         for k in range(0, self.height): #repeated for number of floors
             for i in range(0, self.length): #repeated for floor length
                 #displaying the floor seperator between each floor
-                display_surf.blit(floor_surf,( k * tile_size * (self.width + 1) , (i + 1) * tile_size))
+                display_surf.blit(floor_surf,(k * tile_size * (self.width + 1) , (i + 1) * tile_size))
                 for j in range(0,self.width): #repeated for floor width
                     if not(isinstance(self.map[k][i][j], int)): #if not an empty space which can be traversed
-                        tile = None;
+                        tile = None
                         if self.map[k][i][j] == '#': #wall
                             tile = wall_surf
                         elif self.map[k][i][j] == 'A': #stairs
@@ -182,7 +184,7 @@ class Maze(object):
                         elif self.map[k][i][j] == 'E': #end tile
                             tile = end_surf
                             self.end_node = Node(k,i,j,self,None)
-                        display_surf.blit(tile,( (j + k * self.width + k + 1) * tile_size, (i + 1) * tile_size))
+                        display_surf.blit(tile,((j + k * self.width + k + 1) * tile_size, (i + 1) * tile_size))
                     else:
                         if self.tile_color[k][i][j] == 0:
                             font_colour = (255, 255, 255)
@@ -196,31 +198,31 @@ class Maze(object):
                             font_colour = (0, 255, 255)
 
                         tile_label = number_font.render(str(self.map[k][i][j]), 1, font_colour)
-                        display_surf.blit(tile_label, ( (j + k * self.width + k + 1) * tile_size + 5, (i + 1) * tile_size + 5))
+                        display_surf.blit(tile_label, ((j + k * self.width + k + 1) * tile_size + 5, (i + 1) * tile_size + 5))
                         cost_label = text_font.render(self.__str, 1, (255, 255, 255)) #displaying final cost
-                        display_surf.blit(cost_label, ( 10, (self.length + 8) * tile_size))
+                        display_surf.blit(cost_label, (10, (self.length + 8) * tile_size))
                             
                     j = j + 1
                 if k == (self.height - 1): #if last floor, print the final floor sperator
-                    display_surf.blit(floor_surf,( (j + k * self.width + k + 1) * tile_size, (i + 1) * tile_size))
-                i = i + 1;
+                    display_surf.blit(floor_surf,((j + k * self.width + k + 1) * tile_size, (i + 1) * tile_size))
+                i = i + 1
         
         #bottom floor seperator
         for k in range(0, self.width * self.height + self.height + 1):
-            display_surf.blit(floor_surf,( k * tile_size, (self.length + 1) * tile_size))
+            display_surf.blit(floor_surf,(k * tile_size, (self.length + 1) * tile_size))
         guide_label = text_font.render("Press 1 for DFS, 2 for BFS, 3 for UCS,", 1, (255, 255, 255))
-        display_surf.blit(guide_label, ( 10, (self.length + 2) * tile_size))
+        display_surf.blit(guide_label, (10, (self.length + 2) * tile_size))
         guide_label = text_font.render("4 for A* with h = Manhattan Distance, 5 for A* with h = Euclidean distance,", 1, (255, 255, 255))
-        display_surf.blit(guide_label, ( 10, (self.length + 3) * tile_size))
+        display_surf.blit(guide_label, (10, (self.length + 3) * tile_size))
         guide_label = text_font.render("6 for greedy with h = Manhattan Distance, 7 for greedy with h = Euclidean distance,", 1, (255, 255, 255))
-        display_surf.blit(guide_label, ( 10, (self.length + 4) * tile_size))
+        display_surf.blit(guide_label, (10, (self.length + 4) * tile_size))
         guide_label = text_font.render("R to generate new map", 1, (255, 255, 255))
-        display_surf.blit(guide_label, ( 10, (self.length + 5) * tile_size))
+        display_surf.blit(guide_label, (10, (self.length + 5) * tile_size))
         guide_label = text_font.render("A, B, C, D or E to load a predefined map", 1, (255, 255, 255))
-        display_surf.blit(guide_label, ( 10, (self.length + 6) * tile_size))
+        display_surf.blit(guide_label, (10, (self.length + 6) * tile_size))
         guide_label = text_font.render("Use right arrow to navigate to next step", 1, (255, 255, 255))
-        display_surf.blit(guide_label, ( 10, (self.length + 7) * tile_size))
+        display_surf.blit(guide_label, (10, (self.length + 7) * tile_size))
 
-    def print (self, str):
+    def print(self, str):
         self.__str = str
 
