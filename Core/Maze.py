@@ -192,6 +192,8 @@ class Maze(object):
                             font_colour = (100, 100, 255)
                         elif self.tile_color[k][i][j] == 3:
                             font_colour = (255, 0, 255)
+                        elif self.tile_color[k][i][j] == 4:
+                            font_colour = (0, 255, 255)
 
                         tile_label = number_font.render(str(self.map[k][i][j]), 1, font_colour)
                         display_surf.blit(tile_label, ( (j + k * self.width + k + 1) * tile_size + 5, (i + 1) * tile_size + 5))

@@ -68,6 +68,11 @@ class Search(object):
             self.__maze.solved = True
             self.__maze.print("DFS cost is " + str(Search.found.get_path_cost()))
             print("DFS cost is " + str(Search.found.get_path_cost()))
+            print("Path is:")
+            for n in Node.path:
+                print(n)
+                self.__maze.tile_color[n.i][n.j][n.k] = 4
+            print(" ")
         else:
             self.__maze.print("No Solution")
             print("No Solution")
@@ -97,6 +102,11 @@ class Search(object):
             self.__maze.solved = True
             self.__maze.print("BFS cost is " + str(Search.found.get_path_cost()))
             print("BFS cost is " + str(Search.found.get_path_cost()))
+            print("Path is:")
+            for n in Node.path:
+                print(n)
+                self.__maze.tile_color[n.i][n.j][n.k] = 4
+            print(" ")
         else:
             self.__maze.print("No Solution")
             print("No Solution")
@@ -130,6 +140,11 @@ class Search(object):
             self.__maze.solved = True
             self.__maze.print("UCS cost is " + str(Search.found.get_path_cost()))
             print("UCS cost is " + str(Search.found.get_path_cost()))
+            print("Path is:")
+            for n in Node.path:
+                print(n)
+                self.__maze.tile_color[n.i][n.j][n.k] = 4
+            print(" ")
         else:
             self.__maze.print("No Solution")
             print("No Solution")
@@ -166,6 +181,11 @@ class Search(object):
             self.__maze.solved = True
             self.__maze.print("A* with " + ("Manhattan distance" if self.mode == 4 else "Euclidean distance") + " cost is " + str(Search.found.get_path_cost()))
             print("A* with " + ("Manhattan distance" if self.mode == 4 else "Euclidean distance") + " cost is " + str(Search.found.get_path_cost()))
+            print("Path is:")
+            for n in Node.path:
+                print(n)
+                self.__maze.tile_color[n.i][n.j][n.k] = 4
+            print(" ")
         else:
             self.__maze.print("No Solution")
             print("No Solution")
@@ -202,6 +222,11 @@ class Search(object):
             self.__maze.solved = True
             self.__maze.print("Greedy with " + ("Manhattan distance" if self.mode == 6 else "Euclidean distance") + " cost is " + str(Search.found.get_path_cost()))
             print("Greedy with " + ("Manhattan distance" if self.mode == 6 else "Euclidean distance") + " cost is " + str(Search.found.get_path_cost()))
+            print("Path is:")
+            for n in Node.path:
+                print(n)
+                self.__maze.tile_color[n.i][n.j][n.k] = 4
+            print(" ")
         else:
             self.__maze.print("No Solution")
             print("No Solution")
