@@ -67,8 +67,10 @@ class Search(object):
         elif Search.found != None:
             self.__maze.solved = True
             self.__maze.print("DFS cost is " + str(Search.found.get_path_cost()))
+            print("DFS cost is " + str(Search.found.get_path_cost()))
         else:
             self.__maze.print("No Solution")
+            print("No Solution")
 
     def __init_BFS(self):
         self.__ds.append(self.__start_node)
@@ -94,8 +96,10 @@ class Search(object):
         elif Search.found != None:
             self.__maze.solved = True
             self.__maze.print("BFS cost is " + str(Search.found.get_path_cost()))
+            print("BFS cost is " + str(Search.found.get_path_cost()))
         else:
             self.__maze.print("No Solution")
+            print("No Solution")
 
     def __init_UCS(self):
         self.__ds.append((0,self.__start_node))
@@ -125,8 +129,10 @@ class Search(object):
         elif Search.found != None:
             self.__maze.solved = True
             self.__maze.print("UCS cost is " + str(Search.found.get_path_cost()))
+            print("UCS cost is " + str(Search.found.get_path_cost()))
         else:
             self.__maze.print("No Solution")
+            print("No Solution")
 
     def __init_A_star(self):
         self.__ds.append((0,self.__start_node))
@@ -159,8 +165,10 @@ class Search(object):
         elif Search.found != None:
             self.__maze.solved = True
             self.__maze.print("A* with " + ("Manhattan distance" if self.mode == 4 else "Euclidean distance") + " cost is " + str(Search.found.get_path_cost()))
+            print("A* with " + ("Manhattan distance" if self.mode == 4 else "Euclidean distance") + " cost is " + str(Search.found.get_path_cost()))
         else:
             self.__maze.print("No Solution")
+            print("No Solution")
 
     def __init_greedy(self):
         self.__ds.append(self.__start_node)
@@ -193,8 +201,10 @@ class Search(object):
         elif Search.found != None:
             self.__maze.solved = True
             self.__maze.print("Greedy with " + ("Manhattan distance" if self.mode == 6 else "Euclidean distance") + " cost is " + str(Search.found.get_path_cost()))
+            print("Greedy with " + ("Manhattan distance" if self.mode == 6 else "Euclidean distance") + " cost is " + str(Search.found.get_path_cost()))
         else:
             self.__maze.print("No Solution")
+            print("No Solution")
 
     def __manhattan(self, n):
         return abs(n.i - self.__end_node.i) + abs(n.j - self.__end_node.j) + abs(n.k - self.__end_node.k)
