@@ -8,10 +8,39 @@ import json
 
 class Maze(object):
 
-    def __init__(self, **kwargs): #MAZe constructor
+    def __init__(self, file_name):
         self.solved = False
         self.__str = ""
-        self.__generate_random_map()
+        if file_name != None:
+            self.__load_file(file_name)
+        else:
+            self.__generate_random_map()
+
+    def __load_file(self, fname):
+        with open(fname) as f:
+            #content = f.readlines()
+            self.length, self.width = [int(x) for x in next(f).split()]
+            self.height = 1
+            self.map = [None] * self.height
+            self.tile_color = [None] * self.height
+            self.map[0] = [None] * self.length
+            self.tile_color[0] = [None] * self.length
+            for i in range(0, self.length):
+                self.map[0][i] = [None] * self.width
+                self.tile_color[0][i] = [None] * self.width
+                line = next(f)
+                for j in range (0, self.width):
+                    self.tile_color[0][i][j] = 0
+                    c = line[j] 
+                    if c in '0123456789':
+                        self.map[0][i][j] = int(c)
+                    else:
+                        self.map[0][i][j] = c
+                        if c == 'S':
+                            self.start_node = Node(0, i, j, self, None)
+                        elif c == 'E':
+                            self.end_node = Node(0, i, j, self, None)
+
 
     def __generate_random_map(self):
         template = self.__get_random_template()
