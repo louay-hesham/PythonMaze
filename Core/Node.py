@@ -9,7 +9,7 @@ class Node(object):
         self.k = k;
         self.__parent = parent
         if parent == None:
-            self.n = 1
+            self.n = 'S'
         else:
             self.n = maze.map[i][j][k];
         self.__maze = maze;

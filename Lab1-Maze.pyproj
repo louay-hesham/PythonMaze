@@ -51,6 +51,11 @@
     <Content Include="GUI\stairs.png" />
     <Content Include="GUI\block.png" />
     <Content Include="GUI\start.png" />
+    <Content Include="test1.txt" />
+    <Content Include="test2.txt" />
+    <Content Include="test3.txt" />
+    <Content Include="test4.txt" />
+    <Content Include="test5.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />
